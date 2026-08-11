@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Butler App (Demo) - Express API & Gentlemen's Portal</title>
+  <meta name="description" content="Express backend with Swagger API documentation, account registration, profile completion, hobbies selection, 12 Houses of Gentlemen, and Activity Feed.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Global Header -->
+  <header class="global-header">
+    <div class="brand-title">
+      <span style="color:#D86B49">❖</span> Butler App (Demo)
+    </div>
+    <a href="/api-docs" target="_blank" class="swagger-btn">
+      <span>📄 OpenAPI / Swagger UI</span>
+    </a>
+  </header>
+
+  <!-- Main Mobile Container -->
+  <main class="mobile-wrapper">
+    <!-- Top Status Bar Mock -->
+    <div class="status-bar">
+      <span>9:41</span>
+      <span>📶 🔋</span>
+    </div>
+
+    <!-- App Logo Header -->
+    <div class="app-logo-area">
+      <div class="logo-circle"></div>
+      <div class="app-title">Butler App (Demo)</div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toastNotification" class="alert-banner hidden"></div>
+
+    <!-- SCREEN 1: ACCOUNT CREATION & VERIFICATION -->
+    <section id="screenAuth">
+      <h2 class="screen-heading">CREATE YOUR ACCOUNT</h2>
+      <p class="screen-subheading">Enter Your Email & Password To Access The Gentlemen's Portal</p>
+      
+      <form id="formRegister" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="regEmail" class="form-control" placeholder="your@email.com" required value="gentleman@butler.app">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="regPassword" class="form-control" placeholder="••••••••" required value="Password123!">
+        </div>
+        <button type="submit" class="btn-primary">Create Account</button>
+      </form>
+
+      <!-- Verification Code Step -->
+      <div id="boxVerification" class="hidden" style="margin-top: 20px;">
+        <h3 class="screen-heading" style="font-size: 1.1rem;">VERIFY YOUR MAIL</h3>
+        <p class="screen-subheading">Check your inbox and enter the 6-digit OTP verification code.</p>
+        <form id="formVerify" onsubmit="handleVerifyEmail(event)">
+          <div class="form-group">
+            <label class="form-label">Verification Code (OTP)</label>
+            <input type="text" id="verifyCode" class="form-control" placeholder="e.g. 123456" required>
+          </div>
+          <button type="submit" class="btn-primary">Verify Mail & Continue</button>
+        </form>
+      </div>
+
+      <div style="text-align: center; margin-top: 16px; font-size: 0.8rem; color: var(--text-muted);">
+        Already verified? <a href="#" onclick="toggleLoginMode()" style="color: var(--primary-accent)">Switch to Login</a>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: COMPLETE YOUR PROFILE (Matching Screenshot 1) -->
+    <section id="screenProfile" class="hidden">
+      <h2 class="screen-heading">COMPLETE YOUR PROFILE</h2>
+      <p class="screen-subheading">Enter Your Personal Information As It Will Appear On Your Profile</p>
+
+      <form id="formProfile" onsubmit="handleSaveProfile(event)">
+        <div class="form-group">
+          <label class="form-label">Preferred Title</label>
+          <select id="profTitle" class="form-select">
+            <option value="Select your title">Select your title</option>
+            <option value="Lord" selected>Lord</option>
+            <option value="Sir">Sir</option>
+            <option value="Mr">Mr</option>
+            <option value="Dr">Dr</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="profFullName" class="form-control" placeholder="Enter your full name" value="Sir Percival Vance">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <input type="date" id="profDOB" class="form-control" value="1995-08-14">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="profEmail" class="form-control" placeholder="your@email.com" readonly>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <div class="phone-group">
+            <select id="profCountryCode" class="phone-prefix">
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44" selected>🇬🇧 +44</option>
+              <option value="+49">🇩🇪 +49</option>
+            </select>
+            <input type="tel" id="profPhone" class="form-control" placeholder="Phone Number" value="7911 123456">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Country of Residence</label>
+          <select id="profCountry" class="form-select">
+            <option value="Select your country">Select your country</option>
+            <option value="United Kingdom" selected>United Kingdom</option>
+            <option value="United States">United States</option>
+            <option value="Canada">Canada</option>
+            <option value="Germany">Germany</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Regional / State</label>
+          <input type="text" id="profState" class="form-control" placeholder="e.g California, Bavaria, Ontario" value="Greater London">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label">CITY</label>
+            <input type="text" id="profCity" class="form-control" placeholder="CITY NAME" value="London">
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label">POSTCODE</label>
+            <input type="text" id="profPostcode" class="form-control" placeholder="POSTCODE" value="SW1A 1AA">
+          </div>
+        </div>
+        <p style="font-size: 0.72rem; color: var(--primary-accent); margin-bottom: 12px;">
+          Your Location Helps Us Personalize Local Events And Services
+        </p>
+
+        <div class="form-group">
+          <label class="form-label">PROFILE PICTURE</label>
+          <div class="file-upload-box">
+            <input type="file" id="profAvatarFile" class="hidden" accept="image/*" onchange="handleAvatarSelected(event)">
+            <button type="button" class="file-btn" onclick="document.getElementById('profAvatarFile').click()">House File</button>
+            <span id="fileNameDisplay" class="file-name">No File Chosen</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Next</button>
+      </form>
+    </section>
+
+    <!-- SCREEN 3: TELL US YOUR HOBBIES (Matching Screenshot 2) -->
+    <section id="screenHobbies" class="hidden">
+      <h2 class="screen-heading">TELL US YOUR HOBBIES</h2>
+      <p class="screen-subheading">You Can Select Multiple Choices So We Use It To Personalize Your Feed.</p>
+
+      <div class="hobby-list" id="hobbyContainer">
+        <!-- Dynamically filled with hobbies -->
+      </div>
+
+      <button type="button" class="btn-primary" onclick="handleSaveHobbies()">Sign Up</button>
+    </section>
+
+    <!-- SCREEN 4: 12 HOUSES OF THE GENTLEMEN (Matching Screenshot 3 & 4) -->
+    <section id="screenHouses" class="hidden">
+      <h2 class="screen-heading">12 HOUSES OF THE GENTLEMEN</h2>
+      <p class="screen-subheading">Your House Will Be Automatically Selected Based On Your Hobbies. Each Represents Different Values And Traditions.</p>
+
+      <div id="recommendationBanner" class="recommend-banner">
+        Based On Your Selected Hobbies, We Recommend House Percival. The House Best Matches Your Interests And Traits.
+      </div>
+
+      <div class="houses-grid" id="housesGrid">
+        <!-- Dynamically rendered 12 Houses cards -->
+      </div>
+
+      <button type="button" id="btnJoinHouse" class="btn-primary" onclick="handleJoinHouse()">Join House</button>
+    </section>
+
+    <!-- SCREEN 5: ACTIVITY FEED -->
+    <section id="screenFeed" class="hidden">
+      <div class="feed-header">
+        <img id="feedUserAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" class="user-avatar" alt="Avatar">
+        <div>
+          <div id="feedUserName" style="font-weight: 700; font-size: 0.95rem;">Lord Vance</div>
+          <div id="feedUserHouse" style="font-size: 0.78rem; color: var(--primary-accent); font-weight: 600;">House Percival Member</div>
+        </div>
+      </div>
+
+      <div class="feed-create-box">
+        <h4 style="font-size: 0.85rem; color: var(--primary-accent); margin-bottom: 8px;">Create Activity Post</h4>
+        <input type="text" id="postTitle" class="form-control" placeholder="Activity Title" style="margin-bottom: 8px;">
+        <textarea id="postContent" class="form-control" rows="2" placeholder="Share updates with fellow gentlemen..." style="margin-bottom: 8px;"></textarea>
+        <button type="button" class="btn-primary" style="margin-top: 0; padding: 10px;" onclick="handleCreatePost()">Publish Activity</button>
+      </div>
+
+      <div style="font-size: 0.9rem; font-weight: 800; color: var(--primary-accent); margin-bottom: 12px; letter-spacing: 0.5px;">
+        GENTLEMEN ACTIVITY FEED
+      </div>
+
+      <div id="feedPostsContainer">
+        <!-- Feed items dynamically loaded -->
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

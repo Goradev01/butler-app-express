@@ -1,0 +1,154 @@
+{
+  "users": [
+    {
+      "id": "usr_957ut79uf",
+      "email": "testgentleman@butler.app",
+      "passwordHash": "$2a$10$02Yi.S8s3jDb53vBVja1l.UvOrQ.Qzpkv/Pd83LjFS1mwFpgTTFSu",
+      "isVerified": true,
+      "verificationCode": "868770",
+      "createdAt": "2026-08-05T10:30:31.094Z",
+      "profile": {
+        "preferredTitle": "Sir",
+        "fullName": "Sir Lancelot",
+        "dateOfBirth": "1992-06-20",
+        "emailAddress": "testgentleman@butler.app",
+        "phoneNumber": "+44 7911 123456",
+        "phoneCountryCode": "+1",
+        "country": "United Kingdom",
+        "regionalState": "London",
+        "city": "London",
+        "postcode": "SW1A 1AA",
+        "profilePictureUrl": ""
+      },
+      "hobbies": [
+        "Sports",
+        "Adventure & Exploration"
+      ],
+      "joinedHouse": {
+        "id": "lancelot",
+        "name": "Lancelot",
+        "motto": "STRENGTH THROUGH HONOUR",
+        "description": "Chivalry, martial prowess, loyalty, and dedication.",
+        "matchingHobbies": [
+          "Sports",
+          "Adventure & Exploration"
+        ]
+      }
+    },
+    {
+      "id": "usr_7klsc9vjq",
+      "email": "gentleman@butler.app",
+      "passwordHash": "$2a$10$kjwqTlFI6juHouQZvxMuQeydH4U2wyb.msj1MapvlOvPCQOgr2oFS",
+      "isVerified": false,
+      "verificationCode": "200109",
+      "createdAt": "2026-08-05T10:35:52.893Z",
+      "profile": {
+        "preferredTitle": "Lord",
+        "fullName": "Sir Percival Vance",
+        "dateOfBirth": "1995-08-14",
+        "emailAddress": "gentleman@butler.app",
+        "phoneNumber": "7911 123456",
+        "phoneCountryCode": "+44",
+        "country": "United Kingdom",
+        "regionalState": "Greater London",
+        "city": "London",
+        "postcode": "SW1A 1AA",
+        "profilePictureUrl": ""
+      },
+      "hobbies": [
+        "Arts and Culture",
+        "Sports",
+        "Lifestyle"
+      ],
+      "joinedHouse": {
+        "id": "percival",
+        "name": "Percival",
+        "motto": "PASSION AND DEVOTION",
+        "description": "Curiosity, heart, steadfast determination, and quest for truth.",
+        "matchingHobbies": [
+          "Lifestyle",
+          "Arts and Culture",
+          "Adventure & Exploration"
+        ]
+      }
+    },
+    {
+      "id": "usr_algar3h36",
+      "email": "gentleman1@butler.app",
+      "passwordHash": "$2a$10$QHuqSk1nJixZQGVpXD0KDuSkroRXBCy7PnAvc.G5OyRYqD2b2Kxx.",
+      "isVerified": false,
+      "verificationCode": "357600",
+      "createdAt": "2026-08-05T10:48:58.670Z",
+      "profile": null,
+      "hobbies": [],
+      "joinedHouse": null
+    }
+  ],
+  "feeds": [
+    {
+      "id": "feed_1785943914499",
+      "author": "Sir Percival Vance",
+      "authorHouse": "Percival",
+      "authorAvatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
+      "title": "kkk",
+      "content": "kkkk",
+      "category": "General",
+      "houseId": "percival",
+      "likes": 0,
+      "commentsCount": 0,
+      "timestamp": "2026-08-05T15:31:54.499Z"
+    },
+    {
+      "id": "feed_1785925831131",
+      "author": "Sir Lancelot",
+      "authorHouse": "Lancelot",
+      "authorAvatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
+      "title": "Lancelot Tourney Announcement",
+      "content": "Chivalry competition at sunset!",
+      "category": "Sports",
+      "houseId": "lancelot",
+      "likes": 0,
+      "commentsCount": 0,
+      "timestamp": "2026-08-05T10:30:31.131Z"
+    },
+    {
+      "id": "feed_1",
+      "author": "Sir Galahad",
+      "authorHouse": "Galahad",
+      "authorAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+      "title": "The Great Autumn Gala Announcement",
+      "content": "We invite all gentlemen of the 12 Houses to join us for our annual fellowship dinner at the Grand Hall.",
+      "category": "Clubs & Membership",
+      "houseId": "galahad",
+      "likes": 24,
+      "commentsCount": 5,
+      "timestamp": "2026-08-05T08:30:12.834Z"
+    },
+    {
+      "id": "feed_2",
+      "author": "Percival",
+      "authorHouse": "Percival",
+      "authorAvatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
+      "title": "Masterclass: Art of High-Speed Fencing",
+      "content": "House Percival will host an exclusive training session covering speed, grace, and chivalrous sportsmanship.",
+      "category": "Sports",
+      "houseId": "percival",
+      "likes": 42,
+      "commentsCount": 12,
+      "timestamp": "2026-08-05T05:30:12.835Z"
+    },
+    {
+      "id": "feed_3",
+      "author": "Merlin",
+      "authorHouse": "Merlin",
+      "authorAvatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80",
+      "title": "Strategic Chess & Philosophy Tournament",
+      "content": "Test your tactical brilliance in our upcoming monthly gentlemen chess league. Open to all houses.",
+      "category": "Games",
+      "houseId": "merlin",
+      "likes": 18,
+      "commentsCount": 3,
+      "timestamp": "2026-08-04T22:30:12.835Z"
+    }
+  ]
+}
