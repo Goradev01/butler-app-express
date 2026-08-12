@@ -7,24 +7,36 @@ const { authenticateToken } = require('../middleware/auth.middleware');
  * @openapi
  * /api/feed:
  *   get:
- *     summary: Fetch personalized activity feed
+ *     summary: Fetch activity feed with level chapter filtering (Global, Country, City, Town)
  *     tags: [Activity Feed]
  *     parameters:
  *       - in: query
- *         name: category
+ *         name: level
  *         schema:
  *           type: string
- *         description: Filter feed posts by category
+ *         example: global
+ *         description: Filter feed level (global, country, city, town, or all)
+ *       - in: query
+ *         name: houseId
+ *         schema:
+ *           type: string
+ *         example: percival
+ *         description: Filter by House ID
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: Array of feed post items.
  */
 router.get('/', (req, res) => {
-  const { category } = req.query;
-  const feeds = db.getFeeds(null, category);
+  const { level, houseId, search } = req.query;
+  const feeds = db.getFeedsByLevel(level || 'all', houseId, search);
   return res.json({
     success: true,
     count: feeds.length,
+    level: level || 'all',
     feeds
   });
 });
@@ -96,6 +108,36 @@ router.post('/posts/:id/like', (req, res) => {
   return res.json({
     success: true,
     message: 'Post liked!',
+    post
+  });
+});
+
+/**
+ * @openapi
+ * /api/feed/posts/{id}/rsvp:
+ *   post:
+ *     summary: Toggle RSVP for an event post
+ *     tags: [Activity Feed]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: RSVP state updated.
+ */
+router.post('/posts/:id/rsvp', authenticateToken, (req, res) => {
+  const post = db.rsvpFeedPost(req.user.id, req.params.id);
+  if (!post) {
+    return res.status(404).json({ success: false, error: 'Event post not found' });
+  }
+  return res.json({
+    success: true,
+    message: post.isRsvped ? 'RSVP confirmed! Added to your schedule.' : 'RSVP cancelled.',
     post
   });
 });

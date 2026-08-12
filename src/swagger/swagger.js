@@ -32,11 +32,7 @@ const options = {
     }
   },
   apis: [
-    path.join(__dirname, '../routes/auth.routes.js'),
-    path.join(__dirname, '../routes/profile.routes.js'),
-    path.join(__dirname, '../routes/hobbies.routes.js'),
-    path.join(__dirname, '../routes/houses.routes.js'),
-    path.join(__dirname, '../routes/feed.routes.js')
+    path.join(__dirname, '../routes/*.js').replace(/\\/g, '/')
   ]
 };
 

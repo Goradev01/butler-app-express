@@ -8,6 +8,9 @@ const profileRoutes = require('./routes/profile.routes');
 const hobbiesRoutes = require('./routes/hobbies.routes');
 const housesRoutes = require('./routes/houses.routes');
 const feedRoutes = require('./routes/feed.routes');
+const worldGuideRoutes = require('./routes/world_guide.routes');
+const forumRoutes = require('./routes/forum.routes');
+const cityGuideRoutes = require('./routes/city_guide.routes');
 const setupSwagger = require('./swagger/swagger');
 
 const app = express();
@@ -36,6 +39,9 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/hobbies', hobbiesRoutes);
 app.use('/api/houses', housesRoutes);
 app.use('/api/feed', feedRoutes);
+app.use('/api/world-guide', worldGuideRoutes);
+app.use('/api/forum', forumRoutes);
+app.use('/api/city-guide', cityGuideRoutes);
 
 // Root route fallback to frontend SPA
 app.get('*', (req, res) => {

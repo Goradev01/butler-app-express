@@ -1,5 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const { INITIAL_COUNTRIES } = require('./worldGuideData');
+const { FORUM_CATEGORIES, INITIAL_DISCUSSIONS, INITIAL_NOTIFICATIONS } = require('./forumData');
+const { INITIAL_MULTILEVEL_FEEDS } = require('./feedLevelsData');
+const { CITY_GUIDE_CATEGORIES, INITIAL_CITY_PLACES } = require('./cityGuideData');
 
 // In-memory data store with JSON persistence
 const DB_FILE = path.join(__dirname, 'data.json');
@@ -77,7 +81,16 @@ class DatabaseStore {
     this.verificationCodes = new Map(); // email -> code
     this.houses = INITIAL_HOUSES;
     this.hobbies = INITIAL_HOBBIES;
-    this.feeds = [...INITIAL_FEEDS];
+    this.feeds = [...INITIAL_MULTILEVEL_FEEDS, ...INITIAL_FEEDS];
+    this.countries = [...INITIAL_COUNTRIES];
+    this.savedCountries = new Set(['FR', 'JP']); // default saved codes
+    this.forumCategories = [...FORUM_CATEGORIES];
+    this.discussions = [...INITIAL_DISCUSSIONS];
+    this.notifications = [...INITIAL_NOTIFICATIONS];
+    this.cityCategories = [...CITY_GUIDE_CATEGORIES];
+    this.cityPlaces = [...INITIAL_CITY_PLACES];
+    this.userRsvps = new Set();
+    this.placeBookings = [];
     this.loadData();
   }
 
@@ -89,8 +102,11 @@ class DatabaseStore {
         if (parsed.users) {
           parsed.users.forEach(u => this.users.set(u.id, u));
         }
-        if (parsed.feeds) {
-          this.feeds = parsed.feeds;
+        if (parsed.feeds && parsed.feeds.length > 0) {
+          // Merge multilevel feeds with stored user feeds
+          const existingIds = new Set(parsed.feeds.map(f => f.id));
+          const initialNew = INITIAL_MULTILEVEL_FEEDS.filter(f => !existingIds.has(f.id));
+          this.feeds = [...initialNew, ...parsed.feeds];
         }
       }
     } catch (err) {
@@ -254,6 +270,235 @@ class DatabaseStore {
       return post;
     }
     return null;
+  }
+
+  // --- WORLD GUIDE METHODS ---
+  getCountries(search = '') {
+    let result = this.countries.map(c => ({
+      ...c,
+      isSaved: this.savedCountries.has(c.code)
+    }));
+    if (search && search.trim() !== '') {
+      const q = search.toLowerCase().trim();
+      result = result.filter(c => 
+        c.name.toLowerCase().includes(q) || 
+        c.code.toLowerCase().includes(q) || 
+        c.capital.toLowerCase().includes(q)
+      );
+    }
+    return result;
+  }
+
+  getCountryByCode(code) {
+    if (!code) return null;
+    const country = this.countries.find(c => c.code.toUpperCase() === code.toUpperCase());
+    if (!country) return null;
+    return {
+      ...country,
+      isSaved: this.savedCountries.has(country.code)
+    };
+  }
+
+  toggleSavedCountry(code) {
+    const upperCode = code.toUpperCase();
+    if (this.savedCountries.has(upperCode)) {
+      this.savedCountries.delete(upperCode);
+    } else {
+      this.savedCountries.add(upperCode);
+    }
+    return {
+      code: upperCode,
+      isSaved: this.savedCountries.has(upperCode)
+    };
+  }
+
+  getSavedCountries() {
+    return this.countries
+      .filter(c => this.savedCountries.has(c.code))
+      .map(c => ({ ...c, isSaved: true }));
+  }
+
+  // --- FORUM METHODS ---
+  getForumCategories() {
+    return this.forumCategories;
+  }
+
+  getForumDiscussions(category = null, search = '') {
+    let result = [...this.discussions];
+    if (category && category.toLowerCase() !== 'all') {
+      result = result.filter(d => 
+        d.category.toLowerCase() === category.toLowerCase() ||
+        d.categoryId.toLowerCase() === category.toLowerCase()
+      );
+    }
+    if (search && search.trim() !== '') {
+      const q = search.toLowerCase().trim();
+      result = result.filter(d => 
+        d.title.toLowerCase().includes(q) || 
+        d.content.toLowerCase().includes(q)
+      );
+    }
+    return result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }
+
+  getForumDiscussionById(id) {
+    return this.discussions.find(d => d.id === id) || null;
+  }
+
+  createForumDiscussion(userId, { category, title, currentSituation, feelings, biggestChallenge, content }) {
+    const user = this.findUserById(userId);
+    const categoryObj = this.forumCategories.find(c => c.name.toLowerCase() === (category || '').toLowerCase() || c.id === category) || this.forumCategories[0];
+    
+    const newDiscussion = {
+      id: 'disc_' + Date.now(),
+      category: categoryObj.name,
+      categoryId: categoryObj.id,
+      title: title || 'New Circle Discussion',
+      content: content || currentSituation || 'Discussion thread',
+      author: user?.profile?.fullName || user?.email || 'Anonymous Member',
+      authorHouse: user?.joinedHouse?.name || 'House of Arthur',
+      authorAvatar: user?.profile?.profilePictureUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+      currentSituation: currentSituation || '',
+      feelings: Array.isArray(feelings) ? feelings : [feelings].filter(Boolean),
+      biggestChallenge: biggestChallenge || '',
+      participantsCount: 1,
+      repliesCount: 0,
+      createdAt: new Date().toISOString(),
+      replies: []
+    };
+
+    this.discussions.unshift(newDiscussion);
+    this.saveData();
+    return newDiscussion;
+  }
+
+  addDiscussionReply(userId, discussionId, { content, outcome, lessonLearned }) {
+    const discussion = this.getForumDiscussionById(discussionId);
+    if (!discussion) return null;
+
+    const user = this.findUserById(userId);
+    const newReply = {
+      id: 'rep_' + Date.now(),
+      author: user?.profile?.fullName || user?.email || 'Circle Member',
+      authorHouse: user?.joinedHouse?.name || 'Gentleman Member',
+      authorAvatar: user?.profile?.profilePictureUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+      content: content || 'Shared experience reply.',
+      outcome: outcome || 'Fostered resilience and clarity.',
+      lessonLearned: lessonLearned || 'Sharing experiences empowers growth.',
+      createdAt: new Date().toISOString()
+    };
+
+    discussion.replies.push(newReply);
+    discussion.repliesCount += 1;
+    discussion.participantsCount += 1;
+    this.saveData();
+    return newReply;
+  }
+
+  getForumNotifications() {
+    return this.notifications;
+  }
+
+  // --- MULTILEVEL FEED METHODS ---
+  getFeedsByLevel(level = 'all', houseId = null, search = '') {
+    let result = [...this.feeds];
+    
+    if (level && level.toLowerCase() !== 'all') {
+      result = result.filter(f => f.level === level.toLowerCase() || (f.level === undefined && level.toLowerCase() === 'global'));
+    }
+    
+    if (houseId && houseId.toLowerCase() !== 'all') {
+      result = result.filter(f => (f.houseId || '').toLowerCase() === houseId.toLowerCase());
+    }
+
+    if (search && search.trim() !== '') {
+      const q = search.toLowerCase().trim();
+      result = result.filter(f => 
+        f.title.toLowerCase().includes(q) || 
+        f.content.toLowerCase().includes(q) ||
+        (f.category || '').toLowerCase().includes(q)
+      );
+    }
+
+    return result.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  }
+
+  rsvpFeedPost(userId, postId) {
+    const post = this.feeds.find(f => f.id === postId);
+    if (!post) return null;
+
+    const rsvpKey = `${userId}_${postId}`;
+    if (this.userRsvps.has(rsvpKey)) {
+      this.userRsvps.delete(rsvpKey);
+      post.rsvpCount = Math.max(0, (post.rsvpCount || 1) - 1);
+      post.isRsvped = false;
+    } else {
+      this.userRsvps.add(rsvpKey);
+      post.rsvpCount = (post.rsvpCount || 0) + 1;
+      post.isRsvped = true;
+    }
+    this.saveData();
+    return post;
+  }
+
+  // --- CITY GUIDE METHODS ---
+  getCityCategories() {
+    return this.cityCategories;
+  }
+
+  getCityPlaces(city = 'London', categoryId = null, search = '') {
+    let result = [...this.cityPlaces];
+
+    if (city && city.toLowerCase() !== 'all') {
+      result = result.filter(p => p.city.toLowerCase() === city.toLowerCase());
+    }
+
+    if (categoryId && categoryId.toLowerCase() !== 'all') {
+      result = result.filter(p => 
+        p.categoryId.toLowerCase() === categoryId.toLowerCase() ||
+        p.category.toLowerCase() === categoryId.toLowerCase()
+      );
+    }
+
+    if (search && search.trim() !== '') {
+      const q = search.toLowerCase().trim();
+      result = result.filter(p => 
+        p.name.toLowerCase().includes(q) || 
+        p.description.toLowerCase().includes(q) ||
+        p.address.toLowerCase().includes(q)
+      );
+    }
+
+    return result;
+  }
+
+  getCityPlaceById(id) {
+    return this.cityPlaces.find(p => p.id === id) || null;
+  }
+
+  bookCityPlace(userId, placeId, { date, partySize, specialNotes }) {
+    const place = this.getCityPlaceById(placeId);
+    if (!place) return null;
+
+    const user = this.findUserById(userId);
+    const booking = {
+      id: 'book_' + Date.now(),
+      placeId,
+      placeName: place.name,
+      city: place.city,
+      userId,
+      userName: user?.profile?.fullName || user?.email || 'Gentleman Member',
+      userPhone: user?.profile?.phoneNumber || '',
+      date: date || new Date().toISOString(),
+      partySize: partySize || 2,
+      specialNotes: specialNotes || 'VIP Concierge booking requested via Butler App',
+      status: 'Confirmed',
+      createdAt: new Date().toISOString()
+    };
+
+    this.placeBookings.push(booking);
+    this.saveData();
+    return booking;
   }
 }
 

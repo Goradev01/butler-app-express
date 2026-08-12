@@ -3,12 +3,13 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const db = require('../db/store');
 const { generateToken, authenticateToken } = require('../middleware/auth.middleware');
+const { sendVerificationOtpEmail } = require('../services/email.service');
 
 /**
  * @openapi
  * /api/auth/register:
  *   post:
- *     summary: Create a new account
+ *     summary: Create a new account and send OTP via Resend
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
@@ -26,7 +27,7 @@ const { generateToken, authenticateToken } = require('../middleware/auth.middlew
  *                 example: SecretPassword123!
  *     responses:
  *       201:
- *         description: Account created successfully. Verification code generated.
+ *         description: Account created successfully. Verification OTP code sent via Resend.
  *       400:
  *         description: Invalid input or user already exists.
  */
@@ -49,16 +50,79 @@ router.post('/register', async (req, res) => {
     const user = db.createUser(email, passwordHash);
     const token = generateToken(user.id);
 
+    // Send OTP via Resend API
+    const emailResult = await sendVerificationOtpEmail(user.email, user.verificationCode);
+
     return res.status(201).json({
       success: true,
-      message: 'Account created successfully. Please verify your email.',
-      verificationCode: user.verificationCode, // For demo convenience
+      message: emailResult.success
+        ? 'Account created successfully. Verification OTP has been sent to your email address via Resend.'
+        : 'Account created successfully. (Email delivery log noted).',
+      verificationCode: user.verificationCode, // Provided for convenience
+      emailSent: emailResult.success,
       token,
       user: {
         id: user.id,
         email: user.email,
         isVerified: user.isVerified
       }
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+/**
+ * @openapi
+ * /api/auth/resend-otp:
+ *   post:
+ *     summary: Resend OTP verification code via Resend
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email]
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: gentleman@butler.app
+ *     responses:
+ *       200:
+ *         description: Verification OTP sent via Resend.
+ *       400:
+ *         description: Email is required or user not found.
+ */
+router.post('/resend-otp', async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ success: false, error: 'Email address is required.' });
+    }
+
+    const user = db.findUserByEmail(email);
+    if (!user) {
+      return res.status(400).json({ success: false, error: 'User account not found.' });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({ success: false, error: 'Account is already verified.' });
+    }
+
+    // Generate fresh OTP code
+    user.verificationCode = String(Math.floor(100000 + Math.random() * 900000));
+    db.saveData();
+
+    // Send email using Resend
+    const emailResult = await sendVerificationOtpEmail(user.email, user.verificationCode);
+
+    return res.json({
+      success: true,
+      message: 'A new OTP verification code has been dispatched to your email via Resend.',
+      verificationCode: user.verificationCode,
+      emailSent: emailResult.success
     });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });

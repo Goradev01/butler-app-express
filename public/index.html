@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Butler App (Demo) - Express API & Gentlemen's Portal</title>
-  <meta name="description" content="Express backend with Swagger API documentation, account registration, profile completion, hobbies selection, 12 Houses of Gentlemen, and Activity Feed.">
+  <title>Butler App - Gentlemen's Portal, World Guide & Forum</title>
+  <meta name="description" content="Express backend with Swagger API documentation, account registration, profile completion, hobbies selection, 12 Houses of Gentlemen, World Guide & Forum.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,11 +12,16 @@
   <!-- Top Global Header -->
   <header class="global-header">
     <div class="brand-title">
-      <span style="color:#D86B49">❖</span> Butler App (Demo)
+      <span style="color:#D86B49">❖</span> Butler App
     </div>
-    <a href="/api-docs" target="_blank" class="swagger-btn">
-      <span>📄 OpenAPI / Swagger UI</span>
-    </a>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <button type="button" class="butler-header-btn" onclick="openButlerDrawer()">
+        🤖 Butler AI
+      </button>
+      <a href="/api-docs" target="_blank" class="swagger-btn">
+        <span>📄 OpenAPI</span>
+      </a>
+    </div>
   </header>
 
   <!-- Main Mobile Container -->
@@ -24,7 +29,12 @@
     <!-- Top Status Bar Mock -->
     <div class="status-bar">
       <span>9:41</span>
-      <span>📶 🔋</span>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <span onclick="openNotificationsModal()" style="cursor: pointer; position: relative;">
+          🔔 <span id="notifBadgeCount" style="background:#D86B49; color:white; font-size:0.6rem; padding:1px 5px; border-radius:10px; position:absolute; top:-4px; right:-6px;">3</span>
+        </span>
+        <span>📶 🔋</span>
+      </div>
     </div>
 
     <!-- App Logo Header -->
@@ -44,7 +54,7 @@
       <form id="formRegister" onsubmit="handleRegister(event)">
         <div class="form-group">
           <label class="form-label">Email Address</label>
-          <input type="email" id="regEmail" class="form-control" placeholder="your@email.com" required value="gentleman@butler.app">
+          <input type="email" id="regEmail" class="form-control" placeholder="your@email.com" required value="adeboyeadeyemi20@gmail.com">
         </div>
         <div class="form-group">
           <label class="form-label">Password</label>
@@ -56,13 +66,14 @@
       <!-- Verification Code Step -->
       <div id="boxVerification" class="hidden" style="margin-top: 20px;">
         <h3 class="screen-heading" style="font-size: 1.1rem;">VERIFY YOUR MAIL</h3>
-        <p class="screen-subheading">Check your inbox and enter the 6-digit OTP verification code.</p>
+        <p class="screen-subheading">A 6-digit OTP code was sent via <strong>Resend API</strong>. Check your inbox or use code below.</p>
         <form id="formVerify" onsubmit="handleVerifyEmail(event)">
           <div class="form-group">
             <label class="form-label">Verification Code (OTP)</label>
             <input type="text" id="verifyCode" class="form-control" placeholder="e.g. 123456" required>
           </div>
           <button type="submit" class="btn-primary">Verify Mail & Continue</button>
+          <button type="button" class="btn-primary" style="background:#28231F; border: 1px solid var(--primary-accent); margin-top:8px;" onclick="handleResendOtp()">📧 Resend OTP via Email</button>
         </form>
       </div>
 
@@ -71,7 +82,7 @@
       </div>
     </section>
 
-    <!-- SCREEN 2: COMPLETE YOUR PROFILE (Matching Screenshot 1) -->
+    <!-- SCREEN 2: COMPLETE YOUR PROFILE -->
     <section id="screenProfile" class="hidden">
       <h2 class="screen-heading">COMPLETE YOUR PROFILE</h2>
       <p class="screen-subheading">Enter Your Personal Information As It Will Appear On Your Profile</p>
@@ -109,6 +120,7 @@
             <select id="profCountryCode" class="phone-prefix">
               <option value="+1">🇺🇸 +1</option>
               <option value="+44" selected>🇬🇧 +44</option>
+              <option value="+234">🇳🇬 +234</option>
               <option value="+49">🇩🇪 +49</option>
             </select>
             <input type="tel" id="profPhone" class="form-control" placeholder="Phone Number" value="7911 123456">
@@ -120,9 +132,10 @@
           <select id="profCountry" class="form-select">
             <option value="Select your country">Select your country</option>
             <option value="United Kingdom" selected>United Kingdom</option>
+            <option value="France">France</option>
+            <option value="Japan">Japan</option>
+            <option value="Nigeria">Nigeria</option>
             <option value="United States">United States</option>
-            <option value="Canada">Canada</option>
-            <option value="Germany">Germany</option>
           </select>
         </div>
 
@@ -141,9 +154,6 @@
             <input type="text" id="profPostcode" class="form-control" placeholder="POSTCODE" value="SW1A 1AA">
           </div>
         </div>
-        <p style="font-size: 0.72rem; color: var(--primary-accent); margin-bottom: 12px;">
-          Your Location Helps Us Personalize Local Events And Services
-        </p>
 
         <div class="form-group">
           <label class="form-label">PROFILE PICTURE</label>
@@ -158,31 +168,20 @@
       </form>
     </section>
 
-    <!-- SCREEN 3: TELL US YOUR HOBBIES (Matching Screenshot 2) -->
+    <!-- SCREEN 3: TELL US YOUR HOBBIES -->
     <section id="screenHobbies" class="hidden">
       <h2 class="screen-heading">TELL US YOUR HOBBIES</h2>
       <p class="screen-subheading">You Can Select Multiple Choices So We Use It To Personalize Your Feed.</p>
-
-      <div class="hobby-list" id="hobbyContainer">
-        <!-- Dynamically filled with hobbies -->
-      </div>
-
+      <div class="hobby-list" id="hobbyContainer"></div>
       <button type="button" class="btn-primary" onclick="handleSaveHobbies()">Sign Up</button>
     </section>
 
-    <!-- SCREEN 4: 12 HOUSES OF THE GENTLEMEN (Matching Screenshot 3 & 4) -->
+    <!-- SCREEN 4: 12 HOUSES OF THE GENTLEMEN -->
     <section id="screenHouses" class="hidden">
       <h2 class="screen-heading">12 HOUSES OF THE GENTLEMEN</h2>
-      <p class="screen-subheading">Your House Will Be Automatically Selected Based On Your Hobbies. Each Represents Different Values And Traditions.</p>
-
-      <div id="recommendationBanner" class="recommend-banner">
-        Based On Your Selected Hobbies, We Recommend House Percival. The House Best Matches Your Interests And Traits.
-      </div>
-
-      <div class="houses-grid" id="housesGrid">
-        <!-- Dynamically rendered 12 Houses cards -->
-      </div>
-
+      <p class="screen-subheading">Your House Will Be Automatically Selected Based On Your Hobbies.</p>
+      <div id="recommendationBanner" class="recommend-banner"></div>
+      <div class="houses-grid" id="housesGrid"></div>
       <button type="button" id="btnJoinHouse" class="btn-primary" onclick="handleJoinHouse()">Join House</button>
     </section>
 
@@ -207,11 +206,260 @@
         GENTLEMEN ACTIVITY FEED
       </div>
 
-      <div id="feedPostsContainer">
-        <!-- Feed items dynamically loaded -->
+      <div id="feedPostsContainer"></div>
+    </section>
+
+    <!-- SCREEN 6: WORLD GUIDE (Matching Reference Image 1) -->
+    <section id="screenWorldGuide" class="hidden">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h2 class="screen-heading" style="margin:0;">WORLD GUIDE</h2>
+        <span style="font-size: 0.75rem; color: var(--primary-accent); font-weight:700;">🌐 Global Services</span>
+      </div>
+
+      <input type="text" id="worldSearchInput" class="country-search-input" placeholder="🔍 Search country (e.g. France, Japan, Nigeria)..." onkeyup="handleWorldSearch(event)">
+
+      <div class="world-hero-card">
+        <div class="world-hero-title">Essential services, anywhere in the world</div>
+        <div class="world-hero-desc">
+          Access local emergency numbers, healthcare directories, key embassy contacts, and international money transfer rates.
+        </div>
+      </div>
+
+      <!-- Saved Countries Bar -->
+      <div id="worldSavedSection" style="margin-bottom: 16px;">
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase;">
+          Saved Countries
+        </div>
+        <div id="worldSavedContainer" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px;"></div>
+      </div>
+
+      <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-accent); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+        Featured Countries
+      </div>
+
+      <div id="worldCountriesContainer"></div>
+
+      <!-- What each country guide contains -->
+      <div style="margin-top: 20px;">
+        <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">
+          What each country guide contains
+        </div>
+        <div class="guide-feature-box">
+          <div class="guide-feature-title">🌐 Overview</div>
+          <div class="guide-feature-desc">Currency, languages spoken, timezone, capital, and electrical plug types.</div>
+        </div>
+        <div class="guide-feature-box">
+          <div class="guide-feature-title">🚨 Healthcare & Hospitals</div>
+          <div class="guide-feature-desc">Police, ambulance, fire emergency lines, and top recommended emergency care centers.</div>
+        </div>
+        <div class="guide-feature-box">
+          <div class="guide-feature-title">🚖 Getting Around</div>
+          <div class="guide-feature-desc">Ride hailing apps, public transport navigation guides, and local etiquette.</div>
+        </div>
+        <div class="guide-feature-box">
+          <div class="guide-feature-title">💸 International Money Transfer</div>
+          <div class="guide-feature-desc">Top transfer platforms, real-time FX advice, and cashless payment guidelines.</div>
+        </div>
       </div>
     </section>
+
+    <!-- SCREEN 7: FORUM (Matching Reference Image 2) -->
+    <section id="screenForum" class="hidden">
+      <div class="forum-welcome-bar">
+        <div>
+          <div style="font-size: 0.72rem; color: var(--text-muted);">TUESDAY 4TH AUGUST, 2026</div>
+          <h2 class="screen-heading" style="margin: 0; font-size: 1.25rem;">Good Morning, <span id="forumUserName">Sam</span></h2>
+          <p class="screen-subheading" style="margin: 2px 0 0 0;">Welcome, Chat and discuss real-life experiences here.</p>
+        </div>
+      </div>
+
+      <input type="text" id="forumSearchInput" class="country-search-input" placeholder="🔍 Search discussion topics..." onkeyup="handleForumSearch(event)">
+
+      <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-accent); margin-bottom: 8px; text-transform: uppercase;">
+        Categories
+      </div>
+
+      <div class="forum-categories-grid" id="forumCategoriesContainer"></div>
+
+      <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+        <button type="button" class="btn-primary" style="flex: 1; margin: 0; padding: 10px; font-size: 0.8rem;" onclick="openNewDiscussionModal()">
+          + New Discussion
+        </button>
+        <button type="button" class="btn-primary" style="flex: 1; margin: 0; padding: 10px; font-size: 0.8rem; background: #28221E; border: 1px solid var(--primary-accent);" onclick="openShareExperienceModal()">
+          💬 Share Experiences
+        </button>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-main);">Recent Discussions</div>
+        <span style="font-size: 0.75rem; color: var(--primary-accent); cursor: pointer;" onclick="loadForumDiscussions('All')">View all</span>
+      </div>
+
+      <div id="forumDiscussionsContainer"></div>
+    </section>
+
+    <!-- SCREEN 8: SHARE EXPERIENCES DETAIL VIEW -->
+    <section id="screenShareExperience" class="hidden">
+      <button type="button" onclick="showScreen('screenForum')" style="background: none; border: none; color: var(--primary-accent); font-weight: 700; cursor: pointer; margin-bottom: 12px;">
+        ← Back to Forum
+      </button>
+
+      <div class="world-hero-card" style="border-left: 3px solid var(--primary-accent);">
+        <div class="world-hero-title">Experience Sharing Policy</div>
+        <div class="world-hero-desc">
+          Remember: Share experiences, not advice. Use phrases like <em>"I felt..."</em> not <em>"You should..."</em>.
+        </div>
+      </div>
+
+      <div id="discussionDetailContent"></div>
+
+      <div style="margin-top: 20px; background: #221D1A; padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--card-border);">
+        <h4 style="font-size: 0.9rem; color: var(--primary-accent); margin-bottom: 10px;">Submit Your Experience</h4>
+        <div class="form-group">
+          <label class="form-label">What happened in your situation?</label>
+          <textarea id="replyContent" class="form-control" rows="2" placeholder="Describe your real experience..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Outcome achieved</label>
+          <input type="text" id="replyOutcome" class="form-control" placeholder="What resulted from your action?">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Lesson learned</label>
+          <input type="text" id="replyLesson" class="form-control" placeholder="Key takeaway for the circle...">
+        </div>
+        <button type="button" class="btn-primary" onclick="handleSubmitReply()">Submit Experience</button>
+      </div>
+    </section>
+
+    <!-- BOTTOM MOBILE NAVIGATION BAR -->
+    <nav class="bottom-nav" id="bottomNavBar">
+      <button type="button" class="nav-item active" id="navFeed" onclick="switchNavTab('feed')">
+        <span class="nav-icon">🏠</span>
+        <span>Feed</span>
+      </button>
+      <button type="button" class="nav-item" id="navForum" onclick="switchNavTab('forum')">
+        <span class="nav-icon">💬</span>
+        <span>Forum</span>
+      </button>
+      <button type="button" class="nav-item" id="navWorld" onclick="switchNavTab('world')">
+        <span class="nav-icon">🌍</span>
+        <span>World Guide</span>
+      </button>
+      <button type="button" class="nav-item" id="navProfile" onclick="switchNavTab('profile')">
+        <span class="nav-icon">👤</span>
+        <span>Profile</span>
+      </button>
+    </nav>
   </main>
+
+  <!-- MODAL 1: COUNTRY DETAIL MODAL -->
+  <div id="modalCountryDetail" class="modal-overlay">
+    <div class="modal-card">
+      <button type="button" class="modal-close-btn" onclick="closeCountryDetailModal()">×</button>
+      <div id="countryModalContent"></div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: NEW DISCUSSION MODAL (Matching Image 2 Screen 4) -->
+  <div id="modalNewDiscussion" class="modal-overlay">
+    <div class="modal-card">
+      <button type="button" class="modal-close-btn" onclick="closeNewDiscussionModal()">×</button>
+      <div class="modal-title">New Discussion</div>
+      <div class="modal-subtitle">Start a private discussion in a circle</div>
+
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select id="newDiscCategory" class="form-select">
+          <option value="Relationship">Relationship</option>
+          <option value="Career" selected>Career</option>
+          <option value="Family">Family</option>
+          <option value="Finance">Finance</option>
+          <option value="Health">Health</option>
+          <option value="Personal">Personal</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Title</label>
+        <input type="text" id="newDiscTitle" class="form-control" placeholder="e.g. Establishing boundaries with stakeholders">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Current Situation</label>
+        <textarea id="newDiscSituation" class="form-control" rows="2" placeholder="What is happening right now? Be objective."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Feelings (Select up to 3)</label>
+        <div class="feelings-tags-container" id="feelingsTagPicker">
+          <span class="feeling-tag-chip selectable" onclick="toggleFeelingTag(this, 'Frustrated')">Frustrated</span>
+          <span class="feeling-tag-chip selectable" onclick="toggleFeelingTag(this, 'Confused')">Confused</span>
+          <span class="feeling-tag-chip selectable" onclick="toggleFeelingTag(this, 'Anxious')">Anxious</span>
+          <span class="feeling-tag-chip selectable" onclick="toggleFeelingTag(this, 'Overwhelmed')">Overwhelmed</span>
+          <span class="feeling-tag-chip selectable" onclick="toggleFeelingTag(this, 'Inspired')">Inspired</span>
+          <span class="feeling-tag-chip selectable" onclick="toggleFeelingTag(this, 'Confident')">Confident</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Biggest Challenge</label>
+        <input type="text" id="newDiscChallenge" class="form-control" placeholder="What is the primary blocker you face?">
+      </div>
+
+      <button type="button" class="btn-primary" onclick="proceedToBeforeJoinModal()">Post Discussion</button>
+    </div>
+  </div>
+
+  <!-- MODAL 3: BEFORE YOU JOIN CIRCLE MODAL (Matching Image 2 Screen 3) -->
+  <div id="modalBeforeJoin" class="modal-overlay">
+    <div class="modal-card" style="text-align: center;">
+      <div class="modal-title" style="margin-bottom: 12px;">Before You Join</div>
+      <div style="background: #25201C; border-radius: 14px; padding: 16px; font-size: 0.8rem; color: var(--text-muted); text-align: left; margin-bottom: 16px; border: 1px solid var(--card-border);">
+        <p style="margin-bottom: 12px;">Joining this discussion will reveal your identity to other participants in this circle.</p>
+        <div style="display: grid; grid-template-columns: 80px 1fr; gap: 6px; font-size: 0.78rem;">
+          <span style="color: var(--text-muted);">Identity:</span> <strong style="color: var(--text-main);" id="joinModalIdentity">Sir Percival Vance</strong>
+          <span style="color: var(--text-muted);">Affiliation:</span> <strong style="color: var(--text-main);" id="joinModalHouse">House Percival</strong>
+          <span style="color: var(--text-muted);">Location:</span> <strong style="color: var(--text-main);" id="joinModalCity">Greater London</strong>
+        </div>
+      </div>
+      <div style="font-size: 0.72rem; color: var(--primary-accent); margin-bottom: 16px;">
+        I understand and agree to share my identity with participants in this discussion.
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="btn-primary" style="flex:1; background: #2A2420; border:1px solid var(--card-border);" onclick="closeBeforeJoinModal()">Cancel</button>
+        <button type="button" class="btn-primary" style="flex:1;" onclick="confirmPublishDiscussion()">Join Circle</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: NOTIFICATIONS MODAL (Matching Image 2 Screen 6) -->
+  <div id="modalNotifications" class="modal-overlay">
+    <div class="modal-card">
+      <button type="button" class="modal-close-btn" onclick="closeNotificationsModal()">×</button>
+      <div class="modal-title">Notifications</div>
+      <div class="modal-subtitle">Recent circle activity and AI updates</div>
+      <div id="notificationsListContainer"></div>
+    </div>
+  </div>
+
+  <!-- DRAWER: BUTLER AI ASSISTANT DRAWER -->
+  <div id="drawerButler" class="butler-drawer">
+    <div class="butler-content">
+      <button type="button" class="butler-close-btn" onclick="closeButlerDrawer()">×</button>
+      <div style="font-size: 0.78rem; color: var(--primary-accent); font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">
+        Basic Concierge · Responds when asked
+      </div>
+      <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 12px;">Hello <span id="butlerUserName">Sir</span>, How may I help you today?</h3>
+      <div style="margin-bottom: 16px;">
+        <span class="butler-suggestion-pill" onclick="sendButlerPrompt('A table for two tonight')">🍽️ A table for two tonight</span>
+        <span class="butler-suggestion-pill" onclick="sendButlerPrompt('What\'s on this weekend?')">🎭 What's on this weekend?</span>
+        <span class="butler-suggestion-pill" onclick="sendButlerPrompt('Write to your Butler')">✍️ Write to your Butler</span>
+      </div>
+      <div class="form-group" style="margin-bottom: 0;">
+        <input type="text" id="butlerInput" class="form-control" placeholder="Ask Butler concierge anything..." onkeydown="if(event.key==='Enter') submitButlerQuery()">
+      </div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
