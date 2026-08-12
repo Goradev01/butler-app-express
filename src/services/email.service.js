@@ -1,9 +1,13 @@
+require('dotenv').config();
 const { Resend } = require('resend');
 
-const apiKey = process.env.RESEND_API_KEY;
-const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-
-const resend = new Resend(apiKey);
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn('[Resend Service] Warning: RESEND_API_KEY environment variable is not defined.');
+  }
+  return new Resend(apiKey || 're_placeholder_key');
+}
 
 /**
  * Send 6-digit OTP verification email via Resend
@@ -13,6 +17,8 @@ const resend = new Resend(apiKey);
  */
 async function sendVerificationOtpEmail(toEmail, otpCode) {
   try {
+    const resend = getResendClient();
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
     // In Resend sandbox testing mode, emails must be delivered to adeboyeadeyemi20@gmail.com
     const targetEmail = (toEmail && toEmail.endsWith('@gmail.com')) ? toEmail : 'adeboyeadeyemi20@gmail.com';
     
