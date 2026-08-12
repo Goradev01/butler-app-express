@@ -72,6 +72,6 @@ async function sendVerificationOtpEmail(toEmail, otpCode) {
 }
 
 module.exports = {
-  resend,
+  getResendClient,
   sendVerificationOtpEmail
 };
