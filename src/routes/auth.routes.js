@@ -57,8 +57,10 @@ router.post('/register', async (req, res) => {
       success: true,
       message: emailResult.success
         ? 'Account created successfully. Verification OTP has been sent to your email address via Resend.'
-        : 'Account created successfully. (Email delivery log noted).',
-      verificationCode: user.verificationCode, // Provided for convenience
+        : `Account created successfully, but the verification email could not be sent (${emailResult.error}).`,
+      // Only surfaced when delivery actually failed, so verification can still
+      // proceed — never returned once email delivery is working.
+      ...(emailResult.success ? {} : { verificationCode: user.verificationCode }),
       emailSent: emailResult.success,
       token,
       user: {
@@ -120,8 +122,12 @@ router.post('/resend-otp', async (req, res) => {
 
     return res.json({
       success: true,
-      message: 'A new OTP verification code has been dispatched to your email via Resend.',
-      verificationCode: user.verificationCode,
+      message: emailResult.success
+        ? 'A new OTP verification code has been dispatched to your email via Resend.'
+        : `A new code was generated, but the email could not be sent (${emailResult.error}).`,
+      // Only surfaced when delivery actually failed, so verification can still
+      // proceed — never returned once email delivery is working.
+      ...(emailResult.success ? {} : { verificationCode: user.verificationCode }),
       emailSent: emailResult.success
     });
   } catch (error) {
