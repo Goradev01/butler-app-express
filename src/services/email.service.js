@@ -1,20 +1,18 @@
 require('dotenv').config();
-const fs = require('fs');
-const path = require('path');
 const { Resend } = require('resend');
 
-// Embedded directly rather than hosted at a URL — a hosted <img src> depends
-// on APP_BASE_URL being set correctly on whatever server is actually running
-// this, which is easy to get wrong (or forget) on a deploy. Inlining removes
-// that failure mode entirely: the logo is guaranteed to render regardless of
-// server config. (Trade-off: a handful of older email clients, mainly
-// desktop Outlook, block base64 images by default — acceptable here.)
-const LOGO_PATH = path.join(__dirname, '../../public/assets/email/crest.png');
-let logoDataUri = null;
-try {
-  logoDataUri = `data:image/png;base64,${fs.readFileSync(LOGO_PATH).toString('base64')}`;
-} catch (err) {
-  console.warn('[Resend Service] Could not load email logo asset:', err.message);
+// Hosted, not inlined as base64: Gmail (both the confirmed real-world case
+// here, and documented broadly) strips/refuses to render data-URI images in
+// HTML email, so an inlined logo silently fails to show in exactly the
+// client most people actually use. A normal hosted <img src> is the
+// universally-compatible option. Falls back to the known live deployment so
+// this works even if APP_BASE_URL isn't set — override it there if the
+// server ever moves.
+const DEFAULT_APP_BASE_URL = 'http://ec2-51-24-120-153.eu-west-2.compute.amazonaws.com:3000';
+
+function getLogoUrl() {
+  const baseUrl = (process.env.APP_BASE_URL || DEFAULT_APP_BASE_URL).replace(/\/+$/, '');
+  return `${baseUrl}/assets/email/crest.png`;
 }
 
 function getResendClient() {
@@ -56,7 +54,7 @@ async function sendVerificationOtpEmail(toEmail, otpCode) {
       html: `
         <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px 24px; background-color: #000000; color: #ffffff;">
           <div style="text-align: center; margin-bottom: 28px;">
-            ${logoDataUri ? `<img src="${logoDataUri}" width="72" height="98" alt="Butler App" style="display: block; margin: 0 auto 12px; border: 0;" />` : ''}
+            <img src="${getLogoUrl()}" width="72" height="98" alt="Butler App" style="display: block; margin: 0 auto 12px; border: 0;" />
             <p style="color: #8d8987; font-size: 12px; margin: 0; text-transform: uppercase; letter-spacing: 2px;">Gentlemen's Exclusive Portal</p>
           </div>
 
