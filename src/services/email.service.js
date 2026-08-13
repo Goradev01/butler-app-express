@@ -1,5 +1,21 @@
 require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
 const { Resend } = require('resend');
+
+// Embedded directly rather than hosted at a URL — a hosted <img src> depends
+// on APP_BASE_URL being set correctly on whatever server is actually running
+// this, which is easy to get wrong (or forget) on a deploy. Inlining removes
+// that failure mode entirely: the logo is guaranteed to render regardless of
+// server config. (Trade-off: a handful of older email clients, mainly
+// desktop Outlook, block base64 images by default — acceptable here.)
+const LOGO_PATH = path.join(__dirname, '../../public/assets/email/crest.png');
+let logoDataUri = null;
+try {
+  logoDataUri = `data:image/png;base64,${fs.readFileSync(LOGO_PATH).toString('base64')}`;
+} catch (err) {
+  console.warn('[Resend Service] Could not load email logo asset:', err.message);
+}
 
 function getResendClient() {
   const apiKey = process.env.RESEND_API_KEY;
@@ -27,8 +43,6 @@ async function sendVerificationOtpEmail(toEmail, otpCode) {
 
     const resend = getResendClient();
     const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-    const baseUrl = (process.env.APP_BASE_URL || 'http://localhost:3000').replace(/\/+$/, '');
-    const logoUrl = `${baseUrl}/assets/email/crest.png`;
 
     console.log(`[Resend Service] Dispatching OTP email via Resend to ${toEmail}...`);
 
@@ -42,7 +56,7 @@ async function sendVerificationOtpEmail(toEmail, otpCode) {
       html: `
         <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px 24px; background-color: #000000; color: #ffffff;">
           <div style="text-align: center; margin-bottom: 28px;">
-            <img src="${logoUrl}" width="72" height="98" alt="Butler App" style="display: block; margin: 0 auto 12px; border: 0;" />
+            ${logoDataUri ? `<img src="${logoDataUri}" width="72" height="98" alt="Butler App" style="display: block; margin: 0 auto 12px; border: 0;" />` : ''}
             <p style="color: #8d8987; font-size: 12px; margin: 0; text-transform: uppercase; letter-spacing: 2px;">Gentlemen's Exclusive Portal</p>
           </div>
 
