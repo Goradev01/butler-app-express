@@ -12,6 +12,7 @@ const feedRoutes = require('./routes/feed.routes');
 const worldGuideRoutes = require('./routes/world_guide.routes');
 const forumRoutes = require('./routes/forum.routes');
 const cityGuideRoutes = require('./routes/city_guide.routes');
+const butlerRoutes = require('./routes/butler.routes');
 const setupSwagger = require('./swagger/swagger');
 
 const app = express();
@@ -43,6 +44,7 @@ app.use('/api/feed', feedRoutes);
 app.use('/api/world-guide', worldGuideRoutes);
 app.use('/api/forum', forumRoutes);
 app.use('/api/city-guide', cityGuideRoutes);
+app.use('/api/butler', butlerRoutes);
 
 // Root route fallback to frontend SPA
 app.get('*', (req, res) => {

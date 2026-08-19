@@ -230,6 +230,155 @@
           "Adventure & Exploration"
         ]
       }
+    },
+    {
+      "id": "usr_o66mqi94y",
+      "email": "gentleman_1786531203529@butler.app",
+      "passwordHash": "$2a$10$yYfWNH2goSxReKV.z1S8feXITkcc/O/RHljJaFCMkRcU/Qy15FVZu",
+      "isVerified": true,
+      "verificationCode": "446114",
+      "createdAt": "2026-08-12T10:40:03.736Z",
+      "profile": {
+        "preferredTitle": "Lord",
+        "fullName": "Lord Percival Vance",
+        "dateOfBirth": "1990-04-12",
+        "emailAddress": "gentleman_1786531203529@butler.app",
+        "phoneNumber": "+44 7911 987654",
+        "phoneCountryCode": "+1",
+        "country": "United Kingdom",
+        "regionalState": "London",
+        "city": "London",
+        "postcode": "SW1A 1AA",
+        "profilePictureUrl": ""
+      },
+      "hobbies": [
+        "Arts and Culture",
+        "Lifestyle",
+        "Adventure & Exploration"
+      ],
+      "joinedHouse": {
+        "id": "percival",
+        "name": "Percival",
+        "motto": "PASSION AND DEVOTION",
+        "description": "Curiosity, heart, steadfast determination, and quest for truth.",
+        "matchingHobbies": [
+          "Lifestyle",
+          "Arts and Culture",
+          "Adventure & Exploration"
+        ]
+      }
+    },
+    {
+      "id": "usr_qit3z1ee0",
+      "email": "lord_1787128099981@butler.app",
+      "passwordHash": "$2a$10$lunoDXgXZB4GB2w3p/xHf.O0oz0DxYBhTnznEQDWdiq.MgxuKk7O.",
+      "isVerified": false,
+      "verificationCode": "619059",
+      "createdAt": "2026-08-19T08:28:20.105Z",
+      "profile": {
+        "preferredTitle": "Lord",
+        "fullName": "Lord Percival Vance",
+        "dateOfBirth": "",
+        "emailAddress": "lord_1787128099981@butler.app",
+        "phoneNumber": "",
+        "phoneCountryCode": "+1",
+        "country": "",
+        "regionalState": "",
+        "city": "London",
+        "postcode": "",
+        "profilePictureUrl": ""
+      },
+      "hobbies": [],
+      "joinedHouse": {
+        "id": "arthur",
+        "name": "Arthur",
+        "motto": "THE ONCE AND FUTURE KING",
+        "description": "Leadership, wisdom, courage, and noble vision.",
+        "matchingHobbies": [
+          "Clubs & Membership",
+          "Self Development & Well-being"
+        ]
+      }
+    },
+    {
+      "id": "usr_27oo3qadl",
+      "email": "gentleman_1787128117344@butler.app",
+      "passwordHash": "$2a$10$i/EHwww5Y7jQR54aj00D5.ZSYb/eHP6j7IT8aDMXvy5DJf96kqKBK",
+      "isVerified": true,
+      "verificationCode": "591006",
+      "createdAt": "2026-08-19T08:28:37.449Z",
+      "profile": {
+        "preferredTitle": "Lord",
+        "fullName": "Lord Percival Vance",
+        "dateOfBirth": "1990-04-12",
+        "emailAddress": "gentleman_1787128117344@butler.app",
+        "phoneNumber": "+44 7911 987654",
+        "phoneCountryCode": "+1",
+        "country": "United Kingdom",
+        "regionalState": "London",
+        "city": "London",
+        "postcode": "SW1A 1AA",
+        "profilePictureUrl": ""
+      },
+      "hobbies": [
+        "Arts and Culture",
+        "Lifestyle",
+        "Adventure & Exploration"
+      ],
+      "joinedHouse": {
+        "id": "percival",
+        "name": "Percival",
+        "motto": "PASSION AND DEVOTION",
+        "description": "Curiosity, heart, steadfast determination, and quest for truth.",
+        "matchingHobbies": [
+          "Lifestyle",
+          "Arts and Culture",
+          "Adventure & Exploration"
+        ]
+      }
+    },
+    {
+      "id": "usr_9pa24myp1",
+      "email": "gentlemen@butler.app",
+      "passwordHash": "$2a$10$T8Gp6JGTDHSdNfvsHBYV9uTzJENGVOT9ybDWmrT6vq25Kh4oDkHw6",
+      "isVerified": false,
+      "verificationCode": "636394",
+      "createdAt": "2026-08-19T08:33:31.549Z",
+      "profile": null,
+      "hobbies": [],
+      "joinedHouse": null
+    },
+    {
+      "id": "usr_uo6blsj8e",
+      "email": "lord_1787128706155@butler.app",
+      "passwordHash": "$2a$10$5ljMHDsjmjrUBh10bUhE0OPstN/Brb37IQ//hryfgthvjAh3Dzp3y",
+      "isVerified": false,
+      "verificationCode": "795430",
+      "createdAt": "2026-08-19T08:38:26.268Z",
+      "profile": {
+        "preferredTitle": "Lord",
+        "fullName": "Lord Percival Vance",
+        "dateOfBirth": "",
+        "emailAddress": "lord_1787128706155@butler.app",
+        "phoneNumber": "",
+        "phoneCountryCode": "+1",
+        "country": "",
+        "regionalState": "",
+        "city": "London",
+        "postcode": "",
+        "profilePictureUrl": ""
+      },
+      "hobbies": [],
+      "joinedHouse": {
+        "id": "arthur",
+        "name": "Arthur",
+        "motto": "THE ONCE AND FUTURE KING",
+        "description": "Leadership, wisdom, courage, and noble vision.",
+        "matchingHobbies": [
+          "Clubs & Membership",
+          "Self Development & Well-being"
+        ]
+      }
     }
   ],
   "feeds": [
@@ -246,7 +395,7 @@
       "houseId": "arthur",
       "likes": 48,
       "commentsCount": 14,
-      "rsvpCount": 90,
+      "rsvpCount": 92,
       "isRsvped": true,
       "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80",
       "location": "Lisbon, Portugal",

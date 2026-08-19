@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # Butler App Express Backend
+  butler-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: butler_express_backend
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - JWT_SECRET=${JWT_SECRET:-butler_super_jwt_secret_2026}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - RESEND_FROM_EMAIL=${RESEND_FROM_EMAIL:-info@butler.app}
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OLLAMA_MODEL=qwen2.5:0.5b
+      - OLLAMA_TIMEOUT_MS=60000
+    depends_on:
+      - ollama
+    volumes:
+      - uploads_data:/app/public/uploads
+      - app_db_data:/app/src/db
+
+  # Ollama LLM Service with qwen2.5:0.5b
+  ollama:
+    image: ollama/ollama:latest
+    container_name: butler_ollama_engine
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    # If deploying on AWS EC2 with NVIDIA GPU, uncomment deploy block below:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+volumes:
+  uploads_data:
+  app_db_data:
+  ollama_models:
