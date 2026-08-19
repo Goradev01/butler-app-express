@@ -115,15 +115,18 @@ docker exec -it butler_ollama_engine ollama list
 
 ---
 
-### Step 5: Test the API from Your Terminal / Postman
+### Step 5: Test the API from Your Terminal / Postman / Swagger
 ```bash
-# Health & Status check
-curl http://localhost:3000/api/butler/status
+# Live EC2 Health & Status check
+curl http://ec2-51-24-120-153.eu-west-2.compute.amazonaws.com:3000/api/butler/status
 
-# Test Chat endpoint
-curl -X POST http://localhost:3000/api/butler/chat \
+# Live EC2 Chat endpoint test
+curl -X POST http://ec2-51-24-120-153.eu-west-2.compute.amazonaws.com:3000/api/butler/chat \
   -H "Content-Type: application/json" \
   -d '{"message": "A table for two tonight in London please.", "persona": "eaton"}'
+
+# Interactive Swagger UI (Open in Browser)
+# http://ec2-51-24-120-153.eu-west-2.compute.amazonaws.com:3000/api-docs
 ```
 
 ---

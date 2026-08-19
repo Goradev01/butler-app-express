@@ -411,6 +411,17 @@
           "Self Development & Well-being"
         ]
       }
+    },
+    {
+      "id": "usr_5te0wu18w",
+      "email": "gentleman_1787140773902@butler.app",
+      "passwordHash": "$2a$10$cZuuHJXkMCYyq6pMQ/AiWOTbjDnvLTV6G2A7YxJOeykyyAoulpc9.",
+      "isVerified": false,
+      "verificationCode": "345677",
+      "createdAt": "2026-08-19T11:59:34.048Z",
+      "profile": null,
+      "hobbies": [],
+      "joinedHouse": null
     }
   ],
   "feeds": [
@@ -783,6 +794,77 @@
           "model": "qwen2.5:0.5b",
           "concierge": null,
           "timestamp": "2026-08-19T09:07:02.959Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787144227142_6r6d4",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-19T12:57:07.142Z",
+      "updatedAt": "2026-08-19T12:57:31.566Z",
+      "messages": [
+        {
+          "id": "msg_1787144251565_2gkp",
+          "role": "user",
+          "content": "A table for two tonight in London please.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-19T12:57:31.565Z"
+        },
+        {
+          "id": "msg_1787144251566_znyo",
+          "role": "assistant",
+          "content": "Good evening, Sir. I would be delighted to arrange a table for two tonight. I recommend Claridge's Bar or The Connaught Grill in Mayfair for private dining. Shall I secure a reservation for 8:00 PM under your name?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-19T12:57:31.566Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787144324601_i81ku",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Mayfair Dining & House Events",
+      "createdAt": "2026-08-19T12:58:44.601Z",
+      "updatedAt": "2026-08-19T12:58:44.601Z",
+      "messages": []
+    },
+    {
+      "id": "conv_1787144362739_aiaw7",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-19T12:59:22.744Z",
+      "updatedAt": "2026-08-19T12:59:28.249Z",
+      "messages": [
+        {
+          "id": "msg_1787144368248_vwra",
+          "role": "user",
+          "content": "what weather.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-19T12:59:28.248Z"
+        },
+        {
+          "id": "msg_1787144368249_x1z7",
+          "role": "assistant",
+          "content": "Certainly, Sir. I can check the current weather conditions in London. What specific type of weather are you looking for?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-19T12:59:28.249Z"
         }
       ]
     }

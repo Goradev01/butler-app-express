@@ -63,6 +63,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`=======================================================`);
   console.log(` Butler App Server running on http://localhost:${PORT}`);
-  console.log(` Swagger Documentation: http://localhost:${PORT}/api-docs`);
+  console.log(` Swagger Docs (Local):   http://localhost:${PORT}/api-docs`);
+  console.log(` Swagger Docs (AWS EC2): http://ec2-51-24-120-153.eu-west-2.compute.amazonaws.com:3000/api-docs`);
   console.log(`=======================================================`);
 });
