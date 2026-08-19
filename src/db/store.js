@@ -91,6 +91,7 @@ class DatabaseStore {
     this.cityPlaces = [...INITIAL_CITY_PLACES];
     this.userRsvps = new Set();
     this.placeBookings = [];
+    this.conversations = new Map(); // id -> conversation object
     this.loadData();
   }
 
@@ -108,6 +109,9 @@ class DatabaseStore {
           const initialNew = INITIAL_MULTILEVEL_FEEDS.filter(f => !existingIds.has(f.id));
           this.feeds = [...initialNew, ...parsed.feeds];
         }
+        if (parsed.conversations && parsed.conversations.length > 0) {
+          parsed.conversations.forEach(c => this.conversations.set(c.id, c));
+        }
       }
     } catch (err) {
       console.warn('Failed to load local database, initializing fresh store', err.message);
@@ -118,7 +122,8 @@ class DatabaseStore {
     try {
       const data = {
         users: Array.from(this.users.values()),
-        feeds: this.feeds
+        feeds: this.feeds,
+        conversations: Array.from(this.conversations.values())
       };
       fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf8');
     } catch (err) {
@@ -499,6 +504,85 @@ class DatabaseStore {
     this.placeBookings.push(booking);
     this.saveData();
     return booking;
+  }
+
+  // --- Butler Chat History & Conversations ---
+
+  createConversation(userId = 'guest', persona = 'eaton', title = 'New Inquiry') {
+    const id = 'conv_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+    const conversation = {
+      id,
+      userId,
+      persona,
+      title,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      messages: []
+    };
+    this.conversations.set(id, conversation);
+    this.saveData();
+    return conversation;
+  }
+
+  getUserConversations(userId) {
+    if (!userId) return [];
+    return Array.from(this.conversations.values())
+      .filter(c => c.userId === userId)
+      .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+  }
+
+  getConversation(conversationId, userId = null) {
+    const conv = this.conversations.get(conversationId);
+    if (!conv) return null;
+    if (userId && conv.userId !== userId && conv.userId !== 'guest') {
+      return null;
+    }
+    return conv;
+  }
+
+  addMessageToConversation(conversationId, { role, content, model, concierge, metrics }) {
+    let conv = this.conversations.get(conversationId);
+    if (!conv) return null;
+
+    const msgId = 'msg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6);
+    const message = {
+      id: msgId,
+      role,
+      content,
+      model: model || 'qwen2.5:0.5b',
+      concierge: concierge || null,
+      timestamp: new Date().toISOString()
+    };
+
+    conv.messages.push(message);
+    conv.updatedAt = new Date().toISOString();
+
+    // Auto-update conversation title from first user query if still generic
+    if (conv.title === 'New Inquiry' || conv.title === 'New Conversation') {
+      if (role === 'user' && content) {
+        conv.title = content.length > 35 ? content.substring(0, 32) + '...' : content;
+      }
+    }
+
+    this.saveData();
+    return message;
+  }
+
+  deleteConversation(conversationId, userId = null) {
+    const conv = this.getConversation(conversationId, userId);
+    if (!conv) return false;
+    this.conversations.delete(conversationId);
+    this.saveData();
+    return true;
+  }
+
+  clearConversationMessages(conversationId, userId = null) {
+    const conv = this.getConversation(conversationId, userId);
+    if (!conv) return false;
+    conv.messages = [];
+    conv.updatedAt = new Date().toISOString();
+    this.saveData();
+    return true;
   }
 }
 

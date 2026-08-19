@@ -379,6 +379,38 @@
           "Self Development & Well-being"
         ]
       }
+    },
+    {
+      "id": "usr_kvn7f1e34",
+      "email": "lord_1787130386429@butler.app",
+      "passwordHash": "$2a$10$Po3wUEA6cYrPbTpzrpdxlOtNspurQkG.NVW3csOd011pDu1ouCQia",
+      "isVerified": false,
+      "verificationCode": "155234",
+      "createdAt": "2026-08-19T09:06:26.582Z",
+      "profile": {
+        "preferredTitle": "Lord",
+        "fullName": "Lord Percival Vance",
+        "dateOfBirth": "",
+        "emailAddress": "lord_1787130386429@butler.app",
+        "phoneNumber": "",
+        "phoneCountryCode": "+1",
+        "country": "",
+        "regionalState": "",
+        "city": "London",
+        "postcode": "",
+        "profilePictureUrl": ""
+      },
+      "hobbies": [],
+      "joinedHouse": {
+        "id": "arthur",
+        "name": "Arthur",
+        "motto": "THE ONCE AND FUTURE KING",
+        "description": "Leadership, wisdom, courage, and noble vision.",
+        "matchingHobbies": [
+          "Clubs & Membership",
+          "Self Development & Well-being"
+        ]
+      }
     }
   ],
   "feeds": [
@@ -652,6 +684,107 @@
       "likes": 18,
       "commentsCount": 3,
       "timestamp": "2026-08-04T22:30:12.835Z"
+    }
+  ],
+  "conversations": [
+    {
+      "id": "conv_1787130369137_kcgfr",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-19T09:06:09.137Z",
+      "updatedAt": "2026-08-19T09:06:26.425Z",
+      "messages": [
+        {
+          "id": "msg_1787130386424_btgp",
+          "role": "user",
+          "content": "A table for two tonight in London please.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-19T09:06:26.424Z"
+        },
+        {
+          "id": "msg_1787130386425_c469",
+          "role": "assistant",
+          "content": "Good evening, Sir. I would be delighted to arrange a table for two tonight. I recommend Claridge's Bar or The Connaught Grill in Mayfair for private dining. Shall I secure a reservation for 8:00 PM under your name?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-19T09:06:26.425Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787130387790_0jf3i",
+      "userId": "usr_kvn7f1e34",
+      "persona": "eaton",
+      "title": "Mayfair Weekend Dining",
+      "createdAt": "2026-08-19T09:06:27.790Z",
+      "updatedAt": "2026-08-19T09:07:02.959Z",
+      "messages": [
+        {
+          "id": "msg_1787130400848_kml5",
+          "role": "user",
+          "content": "Good evening Eaton. I require private dining for six gentlemen at The Connaught Grill this Friday.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-19T09:06:40.848Z"
+        },
+        {
+          "id": "msg_1787130400849_4ln4",
+          "role": "assistant",
+          "content": "Good evening, Sir. I would be delighted to arrange a private table for six gentlemen at The Connaught Grill. Shall I secure a reservation for 8:00 PM under your name, and could you also provide the venue details?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-19T09:06:40.849Z"
+        },
+        {
+          "id": "msg_1787130407250_bkcv",
+          "role": "user",
+          "content": "What time would you recommend for our arrival?",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-19T09:06:47.250Z"
+        },
+        {
+          "id": "msg_1787130407251_xkmm",
+          "role": "assistant",
+          "content": "We would recommend arriving at 7:00 PM to 8:00 PM for your arrival. Please let us know if there are any specific times or requirements you have in mind.",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-19T09:06:47.251Z"
+        },
+        {
+          "id": "msg_1787130407263_aol8",
+          "role": "user",
+          "content": "Recommend three private gentlemen lounges in Mayfair.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-19T09:06:47.264Z"
+        },
+        {
+          "id": "msg_1787130422959_tave",
+          "role": "assistant",
+          "content": "Absolutely. Here are three private gentlemen lounges in Mayfair that I recommend for your evening:\n\n1. **The Connaught Grill** - Mayfair\n   - Address: 5 Hertford Street, Annabel's, Oswald's, Scott's (Mount St)\n   - Description: The Connaught Grill is a private, elegant establishment that serves a range of fine dining and private club beverages. It's known for its excellent service and the best wine and cocktails in the area.\n\n2. **The Aman Spa** - Mayfair\n   - Address: 106-121 Queen Street, Mayfair\n   - Description: The Aman Spa is a luxurious spa that offers a range of treatments and massages. It's a prime location for fine dining guests and is ideal for those seeking relaxation.\n\n3. **ESPA Life at The Corinthia** - Mayfair\n   - Address: 106-121 Queen Street, Mayfair\n   - Description: The Corinthia is a luxurious resort with a range of spa facilities and a private dining area. It's a perfect choice for those seeking a private dining experience.\n\nWould you like to proceed with any of these options?",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-19T09:07:02.959Z"
+        }
+      ]
     }
   ]
 }

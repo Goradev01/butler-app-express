@@ -178,7 +178,13 @@ For high availability, you can run Ollama on a standalone EC2 instance in a priv
 | `GET` | `/api/butler/status` | Connectivity, latency, and model availability check |
 | `GET` | `/api/butler/concierges` | List available concierges (`eaton`, `merlin`, `galahad`) |
 | `GET` | `/api/butler/suggestions` | Prompt pills (e.g., "A table for two tonight") |
-| `POST` | `/api/butler/chat` | Send prompt to Butler with optional auth & history |
-| `POST` | `/api/butler/chat/stream` | Real-time Server-Sent Events (SSE) streaming |
+| `GET` | `/api/butler/conversations` | List persistent chat conversation threads for member |
+| `POST` | `/api/butler/conversations` | Create a new conversation thread |
+| `GET` | `/api/butler/conversations/:id` | Fetch full message history for a conversation |
+| `DELETE` | `/api/butler/conversations/:id` | Delete an entire conversation thread |
+| `DELETE` | `/api/butler/conversations/:id/messages` | Clear history inside a thread |
+| `POST` | `/api/butler/chat` | Send prompt to Butler with conversationId & history |
+| `POST` | `/api/butler/chat/stream` | Real-time Server-Sent Events (SSE) streaming with conversationId |
 | `POST` | `/api/butler/pull-model` | Trigger model pull dynamically |
 | `GET` | `/api-docs` | Interactive Swagger UI API documentation |
+

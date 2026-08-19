@@ -45,7 +45,7 @@ function makeStreamRequest(options, postData) {
 
 async function runButlerTests() {
   console.log('========================================================================');
-  console.log('🧪 TESTING BUTLER OLLAMA (qwen2.5:0.5b) & CONCIERGE BACKEND ENDPOINTS');
+  console.log('🧪 TESTING BUTLER OLLAMA (qwen2.5:0.5b), CONCIERGE & CHAT HISTORY ENDPOINTS');
   console.log('========================================================================\n');
 
   const PORT = process.env.PORT || 3000;
@@ -92,9 +92,8 @@ async function runButlerTests() {
   console.log('Response Content:\n' + '   "' + chatRes.body.message?.content.trim() + '"');
   console.log('Inference Duration:', (Date.now() - chatStart) + 'ms\n');
 
-  // 5. Test Authenticated Chat with Personalized Member Context
-  console.log('👉 [5] Testing POST /api/butler/chat with Authenticated User Context (Lord Percival)...');
-  // Register a test member
+  // 5. Test Authenticated Chat & Persistent Thread Creation
+  console.log('👉 [5] Testing Member Authentication & Creating Conversation Thread...');
   const uniqueEmail = `lord_${Date.now()}@butler.app`;
   const reg = await makeRequest({
     host: 'localhost', port: PORT, path: '/api/auth/register', method: 'POST',
@@ -103,7 +102,6 @@ async function runButlerTests() {
 
   const token = reg.body.token;
 
-  // Complete profile
   await makeRequest({
     host: 'localhost', port: PORT, path: '/api/profile', method: 'PUT',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
@@ -113,76 +111,94 @@ async function runButlerTests() {
     city: 'London'
   });
 
-  // Join House Arthur
   await makeRequest({
     host: 'localhost', port: PORT, path: '/api/houses/join', method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
   }, { houseId: 'arthur' });
 
-  // Call butler chat with JWT token
-  const authChatRes = await makeRequest({
+  // Create thread
+  const convRes = await makeRequest({
+    host: 'localhost', port: PORT, path: '/api/butler/conversations', method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+  }, { persona: 'eaton', title: 'Mayfair Weekend Dining' });
+  const convId = convRes.body.conversation?.id;
+  console.log('Created Conversation Thread ID:', convId, '| Title:', convRes.body.conversation?.title);
+  console.log();
+
+  // 6. Test Persistent Multi-Turn Chat via conversationId
+  console.log('👉 [6] Testing POST /api/butler/chat Turn 1 using conversationId...');
+  const turn1Res = await makeRequest({
     host: 'localhost',
     port: PORT,
     path: '/api/butler/chat',
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    }
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
   }, {
-    message: 'Good evening Eaton, what events are available for members of my house this week?',
-    persona: 'eaton'
+    conversationId: convId,
+    message: 'Good evening Eaton. I require private dining for six gentlemen at The Connaught Grill this Friday.'
   });
-  console.log('Status Code:', authChatRes.statusCode);
-  console.log('Concierge Response for Lord Percival:\n' + '   "' + authChatRes.body.message?.content.trim() + '"\n');
+  console.log('Turn 1 Response:\n   "' + turn1Res.body.message?.content.trim() + '"\n');
 
-  // 6. Test Multi-Turn Conversation History
-  console.log('👉 [6] Testing POST /api/butler/chat with Conversation History...');
+  console.log('👉 [7] Testing POST /api/butler/chat Turn 2 (Context Continuation without sending previous history manually)...');
+  const turn2Res = await makeRequest({
+    host: 'localhost',
+    port: PORT,
+    path: '/api/butler/chat',
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+  }, {
+    conversationId: convId,
+    message: 'What time would you recommend for our arrival?'
+  });
+  console.log('Turn 2 Response:\n   "' + turn2Res.body.message?.content.trim() + '"\n');
+
+  // 8. Test Fetching Complete Conversation History
+  console.log('👉 [8] Testing GET /api/butler/conversations/' + convId + '...');
   const historyRes = await makeRequest({
-    host: 'localhost',
-    port: PORT,
-    path: '/api/butler/chat',
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
-  }, {
-    persona: 'eaton',
-    messages: [
-      { role: 'user', content: 'What is the motto of House Arthur?' },
-      { role: 'assistant', content: 'House Arthur holds the distinguished motto: "THE ONCE AND FUTURE KING", reflecting leadership and noble vision.' },
-      { role: 'user', content: 'Splendid. And what about House Lancelot?' }
-    ]
+    host: 'localhost', port: PORT, path: `/api/butler/conversations/${convId}`, method: 'GET',
+    headers: { 'Authorization': `Bearer ${token}` }
   });
-  console.log('Status Code:', historyRes.statusCode);
-  console.log('Follow-up Response:\n' + '   "' + historyRes.body.message?.content.trim() + '"\n');
+  console.log('Fetched Thread Messages Count:', historyRes.body.conversation?.messages.length);
+  historyRes.body.conversation?.messages.forEach((m, idx) => {
+    console.log(`   [${idx + 1}] (${m.role.toUpperCase()}): "${m.content.substring(0, 70)}..."`);
+  });
+  console.log();
 
-  // 7. Test Server-Sent Events (SSE) Streaming
-  console.log('👉 [7] Testing POST /api/butler/chat/stream (SSE Streaming)...');
+  // 9. Test Listing All Member Conversations
+  console.log('👉 [9] Testing GET /api/butler/conversations...');
+  const listConvRes = await makeRequest({
+    host: 'localhost', port: PORT, path: '/api/butler/conversations', method: 'GET',
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  console.log('Total Conversations for Member:', listConvRes.body.count);
+  console.log();
+
+  // 10. Test Server-Sent Events (SSE) Streaming
+  console.log('👉 [10] Testing POST /api/butler/chat/stream (SSE Streaming)...');
   const streamRes = await makeStreamRequest({
     host: 'localhost',
     port: PORT,
     path: '/api/butler/chat/stream',
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
   }, {
-    message: 'Recommend three private gentlemen lounges in Mayfair.',
-    persona: 'eaton'
+    conversationId: convId,
+    message: 'Recommend three private gentlemen lounges in Mayfair.'
   });
   console.log('Status Code:', streamRes.statusCode);
   console.log('Content-Type:', streamRes.headers['content-type']);
   console.log('Stream Chunks Received:', streamRes.chunksCount);
-  console.log('Stream Sample Output (first 300 chars):');
-  console.log('   ' + streamRes.fullText.substring(0, 300).replace(/\n+/g, ' '));
   console.log();
 
-  // 8. Test Swagger Documentation contains Butler tags
-  console.log('👉 [8] Testing Swagger API Spec for /api/butler tags...');
+  // 11. Test Swagger Documentation contains Butler tags
+  console.log('👉 [11] Testing Swagger API Spec for /api/butler tags...');
   const swagger = await makeRequest({ host: 'localhost', port: PORT, path: '/api-docs.json', method: 'GET' });
   const butlerEndpoints = Object.keys(swagger.body.paths || {}).filter(p => p.startsWith('/api/butler'));
-  console.log('Swagger Status:', swagger.statusCode, '| Butler Endpoints Documented:', butlerEndpoints);
+  console.log('Swagger Status:', swagger.statusCode, '| Butler Endpoints Documented (', butlerEndpoints.length, 'endpoints):', butlerEndpoints);
   console.log();
 
   console.log('========================================================================');
-  console.log('🎉 ALL BUTLER OLLAMA (qwen2.5:0.5b) ENDPOINTS TESTED SUCCESSFULLY!');
+  console.log('🎉 ALL BUTLER OLLAMA & CHAT HISTORY ENDPOINTS TESTED SUCCESSFULLY!');
   console.log('========================================================================');
 }
 

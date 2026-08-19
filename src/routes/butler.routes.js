@@ -27,11 +27,11 @@ function extractUserContext(req) {
 
     return {
       userId: user.id,
-      fullName: user.fullName || '',
-      preferredTitle: user.preferredTitle || '',
+      fullName: user.profile?.fullName || user.fullName || '',
+      preferredTitle: user.profile?.preferredTitle || user.preferredTitle || '',
       houseId: user.houseId || '',
       houseName: houseName || user.houseId || '',
-      city: user.city || '',
+      city: user.profile?.city || user.city || '',
       hobbies: user.hobbies || []
     };
   } catch (err) {
@@ -48,29 +48,6 @@ function extractUserContext(req) {
  *     responses:
  *       200:
  *         description: Current Ollama server status and model availability
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 status:
- *                   type: string
- *                   example: healthy
- *                 connected:
- *                   type: boolean
- *                   example: true
- *                 baseUrl:
- *                   type: string
- *                   example: http://localhost:11434
- *                 activeModel:
- *                   type: string
- *                   example: qwen2.5:0.5b
- *                 isModelAvailable:
- *                   type: boolean
- *                   example: true
  */
 router.get('/status', async (req, res) => {
   try {
@@ -132,9 +109,173 @@ router.get('/suggestions', (req, res) => {
 
 /**
  * @openapi
+ * /api/butler/conversations:
+ *   get:
+ *     summary: List all persistent chat conversations for the current member / user
+ *     tags: [Butler Concierge AI]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Array of conversation threads with message count and timestamps
+ */
+router.get('/conversations', (req, res) => {
+  const userContext = extractUserContext(req);
+  const userId = userContext.userId || req.query.userId || 'guest';
+  const conversations = db.getUserConversations(userId);
+
+  const formatted = conversations.map(c => ({
+    id: c.id,
+    title: c.title,
+    persona: c.persona,
+    messagesCount: c.messages.length,
+    lastMessage: c.messages.length > 0 ? c.messages[c.messages.length - 1] : null,
+    createdAt: c.createdAt,
+    updatedAt: c.updatedAt
+  }));
+
+  return res.json({
+    success: true,
+    count: formatted.length,
+    conversations: formatted
+  });
+});
+
+/**
+ * @openapi
+ * /api/butler/conversations:
+ *   post:
+ *     summary: Create a new persistent conversation thread
+ *     tags: [Butler Concierge AI]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               persona:
+ *                 type: string
+ *                 default: eaton
+ *                 example: eaton
+ *               title:
+ *                 type: string
+ *                 example: "Mayfair Dining & House Events"
+ *     responses:
+ *       201:
+ *         description: Newly created conversation object
+ */
+router.post('/conversations', (req, res) => {
+  const userContext = extractUserContext(req);
+  const userId = userContext.userId || req.body.userId || 'guest';
+  const { persona = 'eaton', title = 'New Inquiry' } = req.body;
+
+  const conv = db.createConversation(userId, persona, title);
+  return res.status(201).json({
+    success: true,
+    conversation: conv
+  });
+});
+
+/**
+ * @openapi
+ * /api/butler/conversations/{id}:
+ *   get:
+ *     summary: Get full chat history for a specific conversation thread
+ *     tags: [Butler Concierge AI]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: "conv_1787128000_abc"
+ *     responses:
+ *       200:
+ *         description: Full conversation details and ordered message list
+ *       404:
+ *         description: Conversation not found
+ */
+router.get('/conversations/:id', (req, res) => {
+  const userContext = extractUserContext(req);
+  const conv = db.getConversation(req.params.id, userContext.userId);
+  if (!conv) {
+    return res.status(404).json({ success: false, error: 'Conversation not found' });
+  }
+  return res.json({
+    success: true,
+    conversation: conv
+  });
+});
+
+/**
+ * @openapi
+ * /api/butler/conversations/{id}:
+ *   delete:
+ *     summary: Delete an entire conversation thread
+ *     tags: [Butler Concierge AI]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Conversation deleted successfully
+ */
+router.delete('/conversations/:id', (req, res) => {
+  const userContext = extractUserContext(req);
+  const deleted = db.deleteConversation(req.params.id, userContext.userId);
+  if (!deleted) {
+    return res.status(404).json({ success: false, error: 'Conversation not found' });
+  }
+  return res.json({
+    success: true,
+    message: 'Conversation deleted successfully'
+  });
+});
+
+/**
+ * @openapi
+ * /api/butler/conversations/{id}/messages:
+ *   delete:
+ *     summary: Clear all messages inside a conversation thread while preserving the thread
+ *     tags: [Butler Concierge AI]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Conversation messages cleared
+ */
+router.delete('/conversations/:id/messages', (req, res) => {
+  const userContext = extractUserContext(req);
+  const cleared = db.clearConversationMessages(req.params.id, userContext.userId);
+  if (!cleared) {
+    return res.status(404).json({ success: false, error: 'Conversation not found' });
+  }
+  return res.json({
+    success: true,
+    message: 'Conversation history cleared successfully'
+  });
+});
+
+/**
+ * @openapi
  * /api/butler/chat:
  *   post:
- *     summary: Send a message to Butler / Eaton Concierge powered by Ollama (qwen2.5:0.5b)
+ *     summary: Send a message to Butler / Eaton with persistent chat history support
  *     tags: [Butler Concierge AI]
  *     security:
  *       - bearerAuth: []
@@ -150,98 +291,121 @@ router.get('/suggestions', (req, res) => {
  *               message:
  *                 type: string
  *                 example: "A table for two tonight in London please."
+ *               conversationId:
+ *                 type: string
+ *                 description: Optional ID of persistent conversation thread to load history from and save to
+ *                 example: "conv_1787128000_abc"
+ *               saveHistory:
+ *                 type: boolean
+ *                 default: true
+ *                 description: Whether to persist this exchange in database history
  *               messages:
  *                 type: array
- *                 description: Full conversation history array of { role, content }
+ *                 description: Optional manual history array if not using conversationId
  *                 items:
  *                   type: object
  *                   properties:
  *                     role:
  *                       type: string
- *                       enum: [user, assistant, system]
  *                     content:
  *                       type: string
- *                 example:
- *                   - role: "user"
- *                     content: "A table for two tonight in London please."
  *               persona:
  *                 type: string
  *                 enum: [eaton, merlin, galahad]
  *                 default: eaton
- *                 example: eaton
  *               temperature:
  *                 type: number
  *                 default: 0.7
- *                 example: 0.7
  *     responses:
  *       200:
- *         description: Concierge response generated by Ollama qwen2.5:0.5b
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 message:
- *                   type: object
- *                   properties:
- *                     role:
- *                       type: string
- *                       example: assistant
- *                     content:
- *                       type: string
- *                       example: "Good evening, Sir. I would be delighted to arrange a table for two tonight..."
- *                 model:
- *                   type: string
- *                   example: qwen2.5:0.5b
- *                 concierge:
- *                   type: object
- *                   properties:
- *                     id:
- *                       type: string
- *                       example: eaton
- *                     name:
- *                       type: string
- *                       example: Eaton
- *                     title:
- *                       type: string
- *                       example: Senior Gentleman's Butler & Concierge
+ *         description: Concierge response generated by Ollama qwen2.5:0.5b with conversationId
  */
 router.post('/chat', async (req, res) => {
   try {
-    const { message, messages, persona = 'eaton', temperature = 0.7, model } = req.body;
+    const {
+      message,
+      messages,
+      conversationId,
+      saveHistory = true,
+      persona = 'eaton',
+      temperature = 0.7,
+      model
+    } = req.body;
 
-    // Support either single message string or array of messages
-    let conversation = [];
-    if (Array.isArray(messages) && messages.length > 0) {
-      conversation = messages;
-    } else if (typeof message === 'string' && message.trim().length > 0) {
-      conversation = [{ role: 'user', content: message.trim() }];
-    } else {
+    const extractedUser = extractUserContext(req);
+    const userId = extractedUser.userId || 'guest';
+    const userContext = {
+      ...extractedUser,
+      ...(req.body.userContext || {})
+    };
+
+    let activeConversation = null;
+    let conversationHistory = [];
+
+    // 1. Resolve or create persistent conversation if requested
+    if (conversationId) {
+      activeConversation = db.getConversation(conversationId, extractedUser.userId);
+      if (!activeConversation) {
+        activeConversation = db.createConversation(userId, persona, 'Inquiry');
+      }
+    } else if (saveHistory) {
+      // Auto create a conversation thread if none provided
+      activeConversation = db.createConversation(userId, persona, 'Inquiry');
+    }
+
+    // 2. Build multi-turn context
+    if (activeConversation && activeConversation.messages.length > 0 && (!messages || messages.length === 0)) {
+      // Take last 12 messages for rolling context buffer (prevents context overflow)
+      const recentMessages = activeConversation.messages.slice(-12);
+      conversationHistory = recentMessages.map(m => ({ role: m.role, content: m.content }));
+    } else if (Array.isArray(messages) && messages.length > 0) {
+      conversationHistory = [...messages];
+    }
+
+    // Append new user message if message string is provided
+    let currentUserQuery = '';
+    if (typeof message === 'string' && message.trim().length > 0) {
+      currentUserQuery = message.trim();
+      conversationHistory.push({ role: 'user', content: currentUserQuery });
+    }
+
+    if (conversationHistory.length === 0) {
       return res.status(400).json({
         success: false,
         error: 'Please provide either a `message` string or a `messages` array.'
       });
     }
 
-    // Extract user context from optional token or payload
-    const extractedUser = extractUserContext(req);
-    const userContext = {
-      ...extractedUser,
-      ...(req.body.userContext || {})
-    };
-
+    // 3. Call Ollama Service
     const response = await ollamaService.chat({
-      messages: conversation,
-      persona,
+      messages: conversationHistory,
+      persona: activeConversation ? activeConversation.persona : persona,
       userContext,
       model,
       temperature
     });
 
-    return res.json(response);
+    // 4. Save to persistent chat history
+    if (activeConversation && saveHistory) {
+      if (currentUserQuery) {
+        db.addMessageToConversation(activeConversation.id, {
+          role: 'user',
+          content: currentUserQuery,
+          model: response.model
+        });
+      }
+      db.addMessageToConversation(activeConversation.id, {
+        role: 'assistant',
+        content: response.message?.content || '',
+        model: response.model,
+        concierge: response.concierge
+      });
+    }
+
+    return res.json({
+      ...response,
+      conversationId: activeConversation ? activeConversation.id : null
+    });
   } catch (err) {
     console.error('Error in /api/butler/chat:', err);
     return res.status(500).json({
@@ -255,76 +419,105 @@ router.post('/chat', async (req, res) => {
  * @openapi
  * /api/butler/chat/stream:
  *   post:
- *     summary: Stream Butler Concierge response in real-time using Server-Sent Events (SSE)
+ *     summary: Stream Butler Concierge response in real-time with conversation tracking
  *     tags: [Butler Concierge AI]
  *     security:
  *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - message
- *             properties:
- *               message:
- *                 type: string
- *                 example: "What's on this weekend in London?"
- *               messages:
- *                 type: array
- *                 items:
- *                   type: object
- *               persona:
- *                 type: string
- *                 default: eaton
- *     responses:
- *       200:
- *         description: Real-time SSE text stream
- *         content:
- *           text/event-stream:
- *             schema:
- *               type: string
  */
 router.post('/chat/stream', async (req, res) => {
   try {
-    const { message, messages, persona = 'eaton', temperature = 0.7, model } = req.body;
+    const {
+      message,
+      messages,
+      conversationId,
+      saveHistory = true,
+      persona = 'eaton',
+      temperature = 0.7,
+      model
+    } = req.body;
 
-    let conversation = [];
-    if (Array.isArray(messages) && messages.length > 0) {
-      conversation = messages;
-    } else if (typeof message === 'string' && message.trim().length > 0) {
-      conversation = [{ role: 'user', content: message.trim() }];
-    } else {
+    const extractedUser = extractUserContext(req);
+    const userId = extractedUser.userId || 'guest';
+    const userContext = {
+      ...extractedUser,
+      ...(req.body.userContext || {})
+    };
+
+    let activeConversation = null;
+    let conversationHistory = [];
+
+    if (conversationId) {
+      activeConversation = db.getConversation(conversationId, extractedUser.userId);
+      if (!activeConversation) {
+        activeConversation = db.createConversation(userId, persona, 'Inquiry');
+      }
+    } else if (saveHistory) {
+      activeConversation = db.createConversation(userId, persona, 'Inquiry');
+    }
+
+    if (activeConversation && activeConversation.messages.length > 0 && (!messages || messages.length === 0)) {
+      const recentMessages = activeConversation.messages.slice(-12);
+      conversationHistory = recentMessages.map(m => ({ role: m.role, content: m.content }));
+    } else if (Array.isArray(messages) && messages.length > 0) {
+      conversationHistory = [...messages];
+    }
+
+    let currentUserQuery = '';
+    if (typeof message === 'string' && message.trim().length > 0) {
+      currentUserQuery = message.trim();
+      conversationHistory.push({ role: 'user', content: currentUserQuery });
+    }
+
+    if (conversationHistory.length === 0) {
       return res.status(400).json({
         success: false,
         error: 'Please provide either a `message` string or a `messages` array.'
       });
     }
 
-    const extractedUser = extractUserContext(req);
-    const userContext = {
-      ...extractedUser,
-      ...(req.body.userContext || {})
-    };
+    // Save user message immediately if persisting
+    if (activeConversation && saveHistory && currentUserQuery) {
+      db.addMessageToConversation(activeConversation.id, {
+        role: 'user',
+        content: currentUserQuery,
+        model: model || 'qwen2.5:0.5b'
+      });
+    }
 
-    // Set Server-Sent Events headers
+    // Set SSE headers
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
     res.flushHeaders && res.flushHeaders();
 
+    let fullAssistantResponse = '';
+
     await ollamaService.streamChat({
-      messages: conversation,
-      persona,
+      messages: conversationHistory,
+      persona: activeConversation ? activeConversation.persona : persona,
       userContext,
       model,
       temperature,
       onChunk: (chunkText) => {
-        res.write(`data: ${JSON.stringify({ content: chunkText })}\n\n`);
+        fullAssistantResponse += chunkText;
+        res.write(`data: ${JSON.stringify({
+          content: chunkText,
+          conversationId: activeConversation ? activeConversation.id : null
+        })}\n\n`);
       },
       onDone: (finalData) => {
-        res.write(`data: ${JSON.stringify({ done: true, metrics: finalData })}\n\n`);
+        if (activeConversation && saveHistory && fullAssistantResponse) {
+          db.addMessageToConversation(activeConversation.id, {
+            role: 'assistant',
+            content: fullAssistantResponse,
+            model: model || 'qwen2.5:0.5b'
+          });
+        }
+        res.write(`data: ${JSON.stringify({
+          done: true,
+          conversationId: activeConversation ? activeConversation.id : null,
+          metrics: finalData
+        })}\n\n`);
         res.end();
       },
       onError: (err) => {
@@ -348,18 +541,6 @@ router.post('/chat/stream', async (req, res) => {
  *   post:
  *     summary: Trigger pulling a model in Ollama (e.g. qwen2.5:0.5b)
  *     tags: [Butler Concierge AI]
- *     requestBody:
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               model:
- *                 type: string
- *                 default: qwen2.5:0.5b
- *     responses:
- *       200:
- *         description: Model pull completion status
  */
 router.post('/pull-model', async (req, res) => {
   try {
