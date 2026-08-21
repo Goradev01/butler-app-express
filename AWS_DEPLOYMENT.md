@@ -86,19 +86,22 @@ newgrp docker
 
 ```bash
 # Clone the repository
-git clone <your-repo-url> /home/ubuntu/butler-app-express
+git clone <your-github-repo-url> /home/ubuntu/butler-app-express
 cd /home/ubuntu/butler-app-express
 
-# Create production .env file
+# Install production dependencies
+npm install --omit=dev
+
+# Create production .env configuration
 cat << 'EOF' > .env
 PORT=3000
 NODE_ENV=production
 JWT_SECRET=your_super_production_secret_key_change_me
 RESEND_API_KEY=re_your_resend_api_key_here
 RESEND_FROM_EMAIL=info@yourdomain.com
-OLLAMA_BASE_URL=http://ollama:11434
-OLLAMA_MODEL=qwen2.5:0.5b
-OLLAMA_TIMEOUT_MS=60000
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-3.6-flash
+GEMINI_TIMEOUT_MS=30000
 EOF
 ```
 

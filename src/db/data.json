@@ -2055,6 +2055,68 @@
           "timestamp": "2026-08-21T10:07:46.149Z"
         }
       ]
+    },
+    {
+      "id": "conv_1787309671472_99epx",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T10:54:31.473Z",
+      "updatedAt": "2026-08-21T10:54:35.391Z",
+      "messages": [
+        {
+          "id": "msg_1787309675387_7tz1",
+          "role": "user",
+          "content": "Hello Eaton, introduce yourself.",
+          "model": "gemini-3.6-flash",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:54:35.387Z"
+        },
+        {
+          "id": "msg_1787309675390_5kbi",
+          "role": "assistant",
+          "content": "Good morning, Sir. I am Eaton, your butler and executive concierge for the 12 Houses of Gentlemen. \n\nIt is my utmost privilege to attend to your affairs, whether overseeing private arrangements across London or curating bespoke access to our exclusive house events and venues. How may I be of service to you today, Sir?",
+          "model": "gemini-3.6-flash",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:54:35.391Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787309706804_pqqyd",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T10:55:06.804Z",
+      "updatedAt": "2026-08-21T10:55:28.673Z",
+      "messages": [
+        {
+          "id": "msg_1787309728668_iztd",
+          "role": "user",
+          "content": "Fetch 5 hotel in London",
+          "model": "gemini-3.6-flash",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:55:28.668Z"
+        },
+        {
+          "id": "msg_1787309728673_9doj",
+          "role": "assistant",
+          "content": "Good morning, Sir. I have curated a selection of five premier luxury hotels in London, each offering world-class hospitality and distinction:\n\n1. **Claridge’s (Mayfair)** – Timeless Art Deco elegance, legendary heritage, and sublime service situated in the heart of Mayfair",
+          "model": "gemini-3.6-flash",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:55:28.673Z"
+        }
+      ]
     }
   ]
 }
