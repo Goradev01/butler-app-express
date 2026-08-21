@@ -33,6 +33,7 @@ This guide details how to deploy the **Butler Express Backend** and the **Ollama
 ```
 
 Because **`qwen2.5:0.5b`** is a high-performance 0.5-billion parameter model:
+
 - **Memory Footprint**: ~398 MB weights + ~200 MB runtime RAM (< 1 GB total).
 - **CPU Inference**: Ultra-fast on standard AWS CPU instances (e.g. `t3.medium`, `t4g.medium` Graviton).
 - **Cost-Efficiency**: Can run on AWS free-tier or inexpensive instances without needing expensive GPU instances.
@@ -42,9 +43,10 @@ Because **`qwen2.5:0.5b`** is a high-performance 0.5-billion parameter model:
 ## 🚀 Option 1: AWS EC2 with Docker Compose (Recommended)
 
 ### Step 1: Launch an AWS EC2 Instance
+
 1. Go to **AWS Console** -> **EC2** -> **Launch Instance**.
 2. **AMI**: Ubuntu Server 24.04 LTS (x86_64 or ARM64).
-3. **Instance Type**: 
+3. **Instance Type**:
    - `t3.medium` (2 vCPU, 4 GB RAM) or `t4g.medium` (Graviton ARM, 2 vCPU, 4 GB RAM)
 4. **Storage**: 20 GB gp3 SSD.
 5. **Security Group Rules**:
@@ -52,17 +54,20 @@ Because **`qwen2.5:0.5b`** is a high-performance 0.5-billion parameter model:
    - Inbound HTTP (Port 80): `0.0.0.0/0`
    - Inbound HTTPS (Port 443): `0.0.0.0/0`
    - Inbound API (Port 3000): `0.0.0.0/0` (or behind ALB)
-   - *Note: Keep Port 11434 private (do NOT expose Ollama port to 0.0.0.0/0).*
+   - _Note: Keep Port 11434 private (do NOT expose Ollama port to 0.0.0.0/0)._
 
 ---
 
 ### Step 2: Provision the EC2 Server
+
 Connect to your EC2 instance via SSH:
+
 ```bash
 ssh -i "your-key.pem" ubuntu@<your-ec2-public-ip>
 ```
 
 Install Docker & Docker Compose:
+
 ```bash
 # Update packages
 sudo apt update && sudo apt upgrade -y
@@ -78,6 +83,7 @@ newgrp docker
 ---
 
 ### Step 3: Clone Code & Configure Environment
+
 ```bash
 # Clone the repository
 git clone <your-repo-url> /home/ubuntu/butler-app-express
@@ -99,6 +105,7 @@ EOF
 ---
 
 ### Step 4: Launch via Docker Compose & Pull Model
+
 ```bash
 # Start backend and ollama containers in background
 docker-compose up -d
@@ -108,14 +115,17 @@ docker exec -it butler_ollama_engine ollama pull qwen2.5:0.5b
 ```
 
 Verify the model is loaded:
+
 ```bash
 docker exec -it butler_ollama_engine ollama list
 ```
-*Output should show `qwen2.5:0.5b` ready!*
+
+_Output should show `qwen2.5:0.5b` ready!_
 
 ---
 
 ### Step 5: Test the API from Your Terminal / Postman / Swagger
+
 ```bash
 # Live EC2 Health & Status check
 curl http://ec2-51-24-120-153.eu-west-2.compute.amazonaws.com:3000/api/butler/status
@@ -176,18 +186,17 @@ For high availability, you can run Ollama on a standalone EC2 instance in a priv
 
 ## 📖 Available Backend Endpoints Reference
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/butler/status` | Connectivity, latency, and model availability check |
-| `GET` | `/api/butler/concierges` | List available concierges (`eaton`, `merlin`, `galahad`) |
-| `GET` | `/api/butler/suggestions` | Prompt pills (e.g., "A table for two tonight") |
-| `GET` | `/api/butler/conversations` | List persistent chat conversation threads for member |
-| `POST` | `/api/butler/conversations` | Create a new conversation thread |
-| `GET` | `/api/butler/conversations/:id` | Fetch full message history for a conversation |
-| `DELETE` | `/api/butler/conversations/:id` | Delete an entire conversation thread |
-| `DELETE` | `/api/butler/conversations/:id/messages` | Clear history inside a thread |
-| `POST` | `/api/butler/chat` | Send prompt to Butler with conversationId & history |
-| `POST` | `/api/butler/chat/stream` | Real-time Server-Sent Events (SSE) streaming with conversationId |
-| `POST` | `/api/butler/pull-model` | Trigger model pull dynamically |
-| `GET` | `/api-docs` | Interactive Swagger UI API documentation |
-
+| Method   | Endpoint                                 | Description                                                      |
+| -------- | ---------------------------------------- | ---------------------------------------------------------------- |
+| `GET`    | `/api/butler/status`                     | Connectivity, latency, and model availability check              |
+| `GET`    | `/api/butler/concierges`                 | List available concierges (`eaton`, `merlin`, `galahad`)         |
+| `GET`    | `/api/butler/suggestions`                | Prompt pills (e.g., "A table for two tonight")                   |
+| `GET`    | `/api/butler/conversations`              | List persistent chat conversation threads for member             |
+| `POST`   | `/api/butler/conversations`              | Create a new conversation thread                                 |
+| `GET`    | `/api/butler/conversations/:id`          | Fetch full message history for a conversation                    |
+| `DELETE` | `/api/butler/conversations/:id`          | Delete an entire conversation thread                             |
+| `DELETE` | `/api/butler/conversations/:id/messages` | Clear history inside a thread                                    |
+| `POST`   | `/api/butler/chat`                       | Send prompt to Butler with conversationId & history              |
+| `POST`   | `/api/butler/chat/stream`                | Real-time Server-Sent Events (SSE) streaming with conversationId |
+| `POST`   | `/api/butler/pull-model`                 | Trigger model pull dynamically                                   |
+| `GET`    | `/api-docs`                              | Interactive Swagger UI API documentation                         |

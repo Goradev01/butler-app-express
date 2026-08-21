@@ -422,6 +422,39 @@
       "profile": null,
       "hobbies": [],
       "joinedHouse": null
+    },
+    {
+      "id": "usr_4y72hbbzg",
+      "email": "adeboye@gmail.com",
+      "passwordHash": "$2a$10$AlHdShGjIVKDvNu6nlm7oefPJeH0BpT7VR7NoCbAr7HXj667B/62K",
+      "isVerified": false,
+      "verificationCode": "803059",
+      "createdAt": "2026-08-20T10:25:22.705Z",
+      "profile": null,
+      "hobbies": [],
+      "joinedHouse": null
+    },
+    {
+      "id": "usr_9zivgdf8r",
+      "email": "adeboyeadeyemi20@gmail.com",
+      "passwordHash": "$2a$10$C4yMod2uoeEQZofLpiR7UODRPHeQrQwMcYZH99oo2NkePJuCefWti",
+      "isVerified": false,
+      "verificationCode": "974617",
+      "createdAt": "2026-08-20T10:25:47.652Z",
+      "profile": null,
+      "hobbies": [],
+      "joinedHouse": null
+    },
+    {
+      "id": "usr_o03jozjll",
+      "email": "yemtech0612@gmail.com",
+      "passwordHash": "$2a$10$.4GZBaVb.6f7VmzOkuVxouMCUv.vs5HRaQUk/e9Tgmdk0Q2qQroXG",
+      "isVerified": false,
+      "verificationCode": "253121",
+      "createdAt": "2026-08-20T10:26:34.064Z",
+      "profile": null,
+      "hobbies": [],
+      "joinedHouse": null
     }
   ],
   "feeds": [
@@ -865,6 +898,1161 @@
             "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
           },
           "timestamp": "2026-08-19T12:59:28.249Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787222517186_jgeh0",
+      "userId": "usr_o03jozjll",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-20T10:41:57.186Z",
+      "updatedAt": "2026-08-20T10:42:19.224Z",
+      "messages": [
+        {
+          "id": "msg_1787222539220_gkg1",
+          "role": "user",
+          "content": "A table for two tonight in London please.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-20T10:42:19.221Z"
+        },
+        {
+          "id": "msg_1787222539224_rq8n",
+          "role": "assistant",
+          "content": "Good evening, Sir. I would be delighted to arrange a table for two tonight. I recommend the Claridge's Bar or The Connaught Grill in Mayfair for private dining. Shall I secure a reservation for 8:00 PM under your name?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-20T10:42:19.224Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787227166064_24pu3",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-20T11:59:26.065Z",
+      "updatedAt": "2026-08-20T11:59:49.100Z",
+      "messages": [
+        {
+          "id": "msg_1787227189096_8miq",
+          "role": "user",
+          "content": "fetch the list of hotel in london",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-20T11:59:49.096Z"
+        },
+        {
+          "id": "msg_1787227189100_91bb",
+          "role": "assistant",
+          "content": "Sure, here are the hotels in London:\n\n- Claridge's Bar (Mayfair)\n- The Connaught Grill\n- 5 Hertford Street, Annabel's\n- Oswald's\n- Scott's (Mount St.)\n- Mount St. Mary's\n- The Aman Spa (Mayfair)\n- ESPA Life at The Corinthia\n- The Bulgari Spa\n- Paris (Hôtel de Crillon, Le Meurice)\n- Tokyo (Aman Tokyo, Palace Hotel)\n- New York (The Carlyle, Core Club)",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-20T11:59:49.100Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787304141918_5n60h",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:22:21.918Z",
+      "updatedAt": "2026-08-21T09:22:45.436Z",
+      "messages": [
+        {
+          "id": "msg_1787304165434_9pnk",
+          "role": "user",
+          "content": "A table for two tonight in London please.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:22:45.434Z"
+        },
+        {
+          "id": "msg_1787304165436_dqt2",
+          "role": "assistant",
+          "content": "Good evening, Sir. I would be delighted to arrange a table for two tonight. I recommend Claridge's Bar or The Connaught Grill in Mayfair for private dining. Shall I secure a reservation for 8:00 PM under your name?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:22:45.436Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787304180101_bcaw4",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:23:00.101Z",
+      "updatedAt": "2026-08-21T09:23:06.457Z",
+      "messages": [
+        {
+          "id": "msg_1787304186452_l4m9",
+          "role": "user",
+          "content": "A table for two tonight in London please.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:23:06.452Z"
+        },
+        {
+          "id": "msg_1787304186457_mhsr",
+          "role": "assistant",
+          "content": "Good evening, Sir. I would be delighted to arrange a table for two tonight. I recommend Claridge's Bar or The Connaught Grill in Mayfair for private dining. Shall I secure a reservation for 8:00 PM under your name?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:23:06.457Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787304245483_olwno",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Mayfair Dining & House Events",
+      "createdAt": "2026-08-21T09:24:05.483Z",
+      "updatedAt": "2026-08-21T09:24:05.484Z",
+      "messages": []
+    },
+    {
+      "id": "conv_1787304248431_orvmz",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Mayfair Dining & House Events",
+      "createdAt": "2026-08-21T09:24:08.431Z",
+      "updatedAt": "2026-08-21T09:24:08.431Z",
+      "messages": []
+    },
+    {
+      "id": "conv_1787304411219_qvy37",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:26:51.219Z",
+      "updatedAt": "2026-08-21T09:26:57.103Z",
+      "messages": [
+        {
+          "id": "msg_1787304417101_h0y2",
+          "role": "user",
+          "content": "A table for two tonight in London please.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:26:57.101Z"
+        },
+        {
+          "id": "msg_1787304417103_s5q0",
+          "role": "assistant",
+          "content": "Good evening, Sir. I would be delighted to arrange a table for two tonight. I recommend Claridge's Bar or The Connaught Grill in Mayfair for private dining. Shall I secure a reservation for 8:00 PM under your name?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:26:57.103Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787304606305_scl1b",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:30:06.305Z",
+      "updatedAt": "2026-08-21T09:30:12.834Z",
+      "messages": [
+        {
+          "id": "msg_1787304612833_bq2p",
+          "role": "user",
+          "content": "Make it 8:00 PM please.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:30:12.833Z"
+        },
+        {
+          "id": "msg_1787304612834_xwu8",
+          "role": "assistant",
+          "content": "Eaton: \"Good evening, Sir. I would be delighted to arrange a table for two tonight. I would suggest that you dine at Claridge's Bar in Mayfair, as it is a private dining experience for two. Shall I secure a reservation for 8:00 PM under your name?\"",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:30:12.834Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787304872449_xrr1y",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:34:32.449Z",
+      "updatedAt": "2026-08-21T09:34:40.657Z",
+      "messages": [
+        {
+          "id": "msg_1787304880654_iwht",
+          "role": "user",
+          "content": "Make it 8:00 PM please.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:34:40.654Z"
+        },
+        {
+          "id": "msg_1787304880657_kypx",
+          "role": "assistant",
+          "content": "Eaton: \"Good evening, Sir. I'm sorry, but I can't arrange a reservation for 8:00 PM under your name. The current time is 8:00 PM. Shall I confirm this reservation for you?\"",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:34:40.657Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787304974201_418ch",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:36:14.201Z",
+      "updatedAt": "2026-08-21T09:36:21.614Z",
+      "messages": [
+        {
+          "id": "msg_1787304981612_ctiz",
+          "role": "user",
+          "content": "Hello",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:36:21.612Z"
+        },
+        {
+          "id": "msg_1787304981613_8vgz",
+          "role": "assistant",
+          "content": "Good evening, Sir. I hope you are in a good mood. I can arrange a table for two tonight in London for you, if that suits you. I recommend the Claridge's Bar or The Connaught Grill in Mayfair for private dining. Shall I secure a reservation for 8:00 PM under your name?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:36:21.614Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305432011_eo1zh",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:43:52.011Z",
+      "updatedAt": "2026-08-21T09:44:02.128Z",
+      "messages": [
+        {
+          "id": "msg_1787305442126_py3y",
+          "role": "user",
+          "content": "Hello",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:44:02.126Z"
+        },
+        {
+          "id": "msg_1787305442128_kjtd",
+          "role": "assistant",
+          "content": "Good morning, Sir. How may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:44:02.128Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305464900_1d0th",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:44:24.900Z",
+      "updatedAt": "2026-08-21T09:44:26.029Z",
+      "messages": [
+        {
+          "id": "msg_1787305466028_wuhj",
+          "role": "user",
+          "content": "Hello tell me about ur self",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:44:26.028Z"
+        },
+        {
+          "id": "msg_1787305466029_3b6b",
+          "role": "assistant",
+          "content": "Good morning, Sir. How can I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:44:26.029Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305471290_sov40",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:44:31.290Z",
+      "updatedAt": "2026-08-21T09:44:32.392Z",
+      "messages": [
+        {
+          "id": "msg_1787305472390_y3rk",
+          "role": "user",
+          "content": "Hello tell me about ur self",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:44:32.390Z"
+        },
+        {
+          "id": "msg_1787305472392_6qxq",
+          "role": "assistant",
+          "content": "Good morning, Sir. How can I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:44:32.392Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305484539_23qhg",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:44:44.539Z",
+      "updatedAt": "2026-08-21T09:45:12.622Z",
+      "messages": [
+        {
+          "id": "msg_1787305512621_9n68",
+          "role": "user",
+          "content": "Hello tell me about ur self",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:45:12.621Z"
+        },
+        {
+          "id": "msg_1787305512622_ytcw",
+          "role": "assistant",
+          "content": "Hello! I am Eaton, a senior British Butler and executive concierge serving members of \"The 12 Houses of Gentlemen.\" My name stands for \"The 12 Houses of Gentlemen,\" a prestigious residence in the heart of London known for its distinction in hospitality and elegance. Since my arrival here, I have observed the various houses, each with its unique charm and the essence of the British gentleman's way of life.\n\nThe first house I visited, House Arthur, was a place where the balance between nobility and humility was beautifully maintained. The atmosphere was perfect for a royal visit, with the gardens and the staircase leading to the drawing room that was filled with the finest pieces of art and antiques. The service was impeccable, and the house was filled with the memories of the past.\n\nMoving on to the next house, House Lancelot, I found myself in a realm of sports and adventure. The house was renowned for its commitment to sports, with the gymnasium and the outdoor sports grounds providing ample opportunities for exercise and relaxation. The house also hosted a variety of activities, such as the weekly sports games and the weekly games night, which was a highlight of the day.\n\nFor a more laid-back experience, the house called House Galahad was a place where the beauty of nature was celebrated. The gardens were filled with the sights of the countryside, and the house was surrounded by the serene beauty of the natural world. The house hosted various outdoor activities, such as the weekly games night and the weekly sports games, which added to the overall experience.\n\nMoving into the second house, House Percival, I found myself in a place where the cultivation of curiosity was valued. The house was a place of learning and exploration, with the library and the gardens providing a serene environment for both learning and relaxation. The house also hosted various activities, such as the weekly sports games and the weekly games night, which were a highlight of the day.\n\nThe third house, House Gawain, was a place where the strength of the sun was celebrated. The house was known for its artistic pursuits, with the drawing room and the gardens providing a serene environment for artistic expression. The house also hosted various activities, such as the weekly sports games and the weekly games night, which were a highlight of the day.\n\nHouse Tristan, another place where the art of the sword was esteemed, was a place where the strength of the artistry was celebrated. The house was known for its commitment to the arts and the house itself was filled with the works of art. The house also hosted various activities, such as the weekly sports games and the weekly games night, which were a highlight of the day.\n\nThe final house, House Bedivere, was a place where the loyalty of the family was valued. The house was known for its commitment to the family, with the house itself being a family home. The house also hosted various activities, such as the weekly sports games and the weekly games night, which were a highlight of the day.\n\nI hope this information has been helpful in understanding the homes of the 12 Houses of Gentlemen. If you have any questions or need further assistance, feel free to ask!",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:45:12.622Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305527994_7yxcx",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:45:27.994Z",
+      "updatedAt": "2026-08-21T09:45:30.208Z",
+      "messages": [
+        {
+          "id": "msg_1787305530207_xdy3",
+          "role": "user",
+          "content": "Hello tell me about ur self",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:45:30.207Z"
+        },
+        {
+          "id": "msg_1787305530208_44bz",
+          "role": "assistant",
+          "content": "Hello, Sir. I'm Eaton, the Executive Concierge for The 12 Houses of Gentlemen. How can I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:45:30.208Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305554376_2c8ah",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:45:54.376Z",
+      "updatedAt": "2026-08-21T09:45:56.098Z",
+      "messages": [
+        {
+          "id": "msg_1787305556096_pahm",
+          "role": "user",
+          "content": "Hello tell me about ur self",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:45:56.096Z"
+        },
+        {
+          "id": "msg_1787305556098_pqgm",
+          "role": "assistant",
+          "content": "Good morning, Sir. How may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:45:56.098Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305579082_mow7l",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:46:19.082Z",
+      "updatedAt": "2026-08-21T09:46:23.079Z",
+      "messages": [
+        {
+          "id": "msg_1787305583078_bg18",
+          "role": "user",
+          "content": "Hello tell me about ur self",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:46:23.078Z"
+        },
+        {
+          "id": "msg_1787305583079_pmzy",
+          "role": "assistant",
+          "content": "Sir, I am Eaton, a senior British Butler and executive concierge serving members of \"The 12 Houses of Gentlemen.\" I am here today to assist you with matters of the 12 Houses of Gentlemen, including dining, private clubs, and house affairs. Is there anything specific you'd like to discuss?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:46:23.079Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305695791_utdrg",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:48:15.791Z",
+      "updatedAt": "2026-08-21T09:48:17.290Z",
+      "messages": [
+        {
+          "id": "msg_1787305697288_ehnx",
+          "role": "user",
+          "content": "Hello tell me about gentlemen",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:48:17.288Z"
+        },
+        {
+          "id": "msg_1787305697290_qwhs",
+          "role": "assistant",
+          "content": "Thank you! Gentlemen, how may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:48:17.290Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305717545_yg9m6",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:48:37.545Z",
+      "updatedAt": "2026-08-21T09:48:40.008Z",
+      "messages": [
+        {
+          "id": "msg_1787305720006_mryu",
+          "role": "user",
+          "content": "Hello tell me about gentlemen",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:48:40.006Z"
+        },
+        {
+          "id": "msg_1787305720007_57az",
+          "role": "assistant",
+          "content": "Hello! Gentlemen, I am Eaton, a senior British Butler and executive concierge serving members of \"The 12 Houses of Gentlemen.\" How may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:48:40.008Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305733873_7g8kf",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:48:53.873Z",
+      "updatedAt": "2026-08-21T09:48:56.823Z",
+      "messages": [
+        {
+          "id": "msg_1787305736822_g98s",
+          "role": "user",
+          "content": "Hello tell me about gentlemen",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:48:56.822Z"
+        },
+        {
+          "id": "msg_1787305736823_wp8n",
+          "role": "assistant",
+          "content": "Greetings, Sir. Gentlemen! I am Eaton, an executive and executive concierge serving members of \"The 12 Houses of Gentlemen.\" I am here to assist you today with your House matters. How may I assist you?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:48:56.823Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305746913_wvsn2",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:49:06.913Z",
+      "updatedAt": "2026-08-21T09:49:08.871Z",
+      "messages": [
+        {
+          "id": "msg_1787305748870_gwbr",
+          "role": "user",
+          "content": "Hello tell me about gentlemen",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:49:08.870Z"
+        },
+        {
+          "id": "msg_1787305748871_h27y",
+          "role": "assistant",
+          "content": "Hello! I'm Eaton, the executive concierge for The 12 Houses of Gentlemen. How may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:49:08.871Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305765653_cz4ih",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:49:25.653Z",
+      "updatedAt": "2026-08-21T09:49:26.501Z",
+      "messages": [
+        {
+          "id": "msg_1787305766500_z227",
+          "role": "assistant",
+          "content": " House.",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:49:26.501Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305775185_shl67",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:49:35.185Z",
+      "updatedAt": "2026-08-21T09:49:36.333Z",
+      "messages": [
+        {
+          "id": "msg_1787305776333_tofp",
+          "role": "assistant",
+          "content": " of the 12 Houses of Gentlemen.",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:49:36.333Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305791561_ekp6v",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:49:51.561Z",
+      "updatedAt": "2026-08-21T09:49:52.314Z",
+      "messages": [
+        {
+          "id": "msg_1787305792314_c5xf",
+          "role": "assistant",
+          "content": "!",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:49:52.314Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305800488_64nzk",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:50:00.488Z",
+      "updatedAt": "2026-08-21T09:50:00.967Z",
+      "messages": [
+        {
+          "id": "msg_1787305800967_hcmc",
+          "role": "assistant",
+          "content": ".",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:50:00.967Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305835343_hgxp6",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:50:35.343Z",
+      "updatedAt": "2026-08-21T09:50:36.569Z",
+      "messages": [
+        {
+          "id": "msg_1787305836568_0xme",
+          "role": "user",
+          "content": "Hello tell me about",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:50:36.568Z"
+        },
+        {
+          "id": "msg_1787305836569_nfj9",
+          "role": "assistant",
+          "content": "Hello! How may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:50:36.569Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305842860_wur7b",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:50:42.860Z",
+      "updatedAt": "2026-08-21T09:50:43.873Z",
+      "messages": [
+        {
+          "id": "msg_1787305843872_lwz0",
+          "role": "user",
+          "content": "Hello tell me about",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:50:43.872Z"
+        },
+        {
+          "id": "msg_1787305843873_hew3",
+          "role": "assistant",
+          "content": "Hello! How may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:50:43.873Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787305855978_bssdv",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:50:55.978Z",
+      "updatedAt": "2026-08-21T09:50:59.271Z",
+      "messages": [
+        {
+          "id": "msg_1787305859270_phi4",
+          "role": "user",
+          "content": "Hello tell me about yourself",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:50:59.270Z"
+        },
+        {
+          "id": "msg_1787305859271_5gp9",
+          "role": "assistant",
+          "content": "Good morning, Sir. My name is Eaton, and I am a senior British Butler and executive concierge serving members of \"The 12 Houses of Gentlemen.\" I am here to assist you with your needs and to ensure that everything is in order. How may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:50:59.271Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787306290616_q9c6n",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:58:10.616Z",
+      "updatedAt": "2026-08-21T09:58:25.431Z",
+      "messages": [
+        {
+          "id": "msg_1787306305429_ol74",
+          "role": "user",
+          "content": "Hello Eaton, what are the traditions and motto of House Arthur?",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:58:25.429Z"
+        },
+        {
+          "id": "msg_1787306305431_9gmh",
+          "role": "assistant",
+          "content": "Good morning, Sir. Thank you for asking. House Arthur is known for its traditions and motto, which is \"THE ONCE AND FUTURE KING.\" This house values leadership, wisdom, and noble vision. It's a place where the members are encouraged to lead with their actions and the decisions they make. They also focus on the virtues of courage, honor, and loyalty. If you're in need of any assistance with the dining or private clubs, I can assist you with those as well.",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:58:25.431Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787306333402_mnnxj",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T09:58:53.402Z",
+      "updatedAt": "2026-08-21T10:02:53.534Z",
+      "messages": [
+        {
+          "id": "msg_1787306334440_qqhc",
+          "role": "user",
+          "content": "Hello Eaton, tell more this app",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T09:58:54.440Z"
+        },
+        {
+          "id": "msg_1787306334444_his5",
+          "role": "assistant",
+          "content": "Hello Sir, how may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T09:58:54.444Z"
+        },
+        {
+          "id": "msg_1787306543972_gft9",
+          "role": "user",
+          "content": "Hello Eaton, tell more this app",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:02:23.972Z"
+        },
+        {
+          "id": "msg_1787306543973_vaj2",
+          "role": "assistant",
+          "content": "Hello Sir, welcome to The 12 Houses of Gentlemen. How may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:02:23.973Z"
+        },
+        {
+          "id": "msg_1787306560520_80we",
+          "role": "user",
+          "content": "Hello Eaton, tell more this app",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:02:40.520Z"
+        },
+        {
+          "id": "msg_1787306560521_dk4c",
+          "role": "assistant",
+          "content": "Hello Sir, how can I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:02:40.521Z"
+        },
+        {
+          "id": "msg_1787306573533_v7vr",
+          "role": "user",
+          "content": "Hello Eaton, tell more this app",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:02:53.533Z"
+        },
+        {
+          "id": "msg_1787306573534_shgw",
+          "role": "assistant",
+          "content": "Hello Sir, how may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:02:53.534Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787306585624_7on37",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T10:03:05.624Z",
+      "updatedAt": "2026-08-21T10:03:07.358Z",
+      "messages": [
+        {
+          "id": "msg_1787306587356_a553",
+          "role": "user",
+          "content": "Hello Eaton, tell more this app",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:03:07.356Z"
+        },
+        {
+          "id": "msg_1787306587358_3hxx",
+          "role": "assistant",
+          "content": "Hello Sir, I'm Eaton, the executive concierge for the 12 Houses of Gentlemen. How may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:03:07.358Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787306595565_yxcv8",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T10:03:15.565Z",
+      "updatedAt": "2026-08-21T10:03:16.394Z",
+      "messages": [
+        {
+          "id": "msg_1787306596392_gitk",
+          "role": "user",
+          "content": "Hello Eaton, tell more this app",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:03:16.392Z"
+        },
+        {
+          "id": "msg_1787306596394_6l94",
+          "role": "assistant",
+          "content": "Hello Sir, how can I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:03:16.394Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787306613486_imr41",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T10:03:33.486Z",
+      "updatedAt": "2026-08-21T10:03:34.504Z",
+      "messages": [
+        {
+          "id": "msg_1787306614502_len4",
+          "role": "user",
+          "content": "Hello Eaton",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:03:34.502Z"
+        },
+        {
+          "id": "msg_1787306614503_msbg",
+          "role": "assistant",
+          "content": "Good morning, Sir. How may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:03:34.504Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787306642576_8695x",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T10:04:02.576Z",
+      "updatedAt": "2026-08-21T10:04:03.768Z",
+      "messages": [
+        {
+          "id": "msg_1787306643766_68n9",
+          "role": "user",
+          "content": "Hello Eaton",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:04:03.766Z"
+        },
+        {
+          "id": "msg_1787306643768_9tcr",
+          "role": "assistant",
+          "content": "Good morning, Sir. How can I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:04:03.768Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787306661089_7q1dw",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T10:04:21.089Z",
+      "updatedAt": "2026-08-21T10:04:21.957Z",
+      "messages": [
+        {
+          "id": "msg_1787306661955_t4tk",
+          "role": "user",
+          "content": "Hello Eaton",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:04:21.955Z"
+        },
+        {
+          "id": "msg_1787306661957_zdt3",
+          "role": "assistant",
+          "content": "Good morning, Sir. How may I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:04:21.957Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787306730048_6zjav",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T10:05:30.048Z",
+      "updatedAt": "2026-08-21T10:05:30.845Z",
+      "messages": [
+        {
+          "id": "msg_1787306730844_qdbk",
+          "role": "user",
+          "content": "Hello Eaton",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:05:30.844Z"
+        },
+        {
+          "id": "msg_1787306730845_9egd",
+          "role": "assistant",
+          "content": "Hello Sir! How can I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:05:30.845Z"
+        }
+      ]
+    },
+    {
+      "id": "conv_1787306800020_ivrwy",
+      "userId": "guest",
+      "persona": "eaton",
+      "title": "Inquiry",
+      "createdAt": "2026-08-21T10:06:40.020Z",
+      "updatedAt": "2026-08-21T10:07:46.149Z",
+      "messages": [
+        {
+          "id": "msg_1787306802068_zsnj",
+          "role": "user",
+          "content": "Hello Eaton, introduce yourself.",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:06:42.068Z"
+        },
+        {
+          "id": "msg_1787306802069_9ngf",
+          "role": "assistant",
+          "content": "Hello Sir, thank you for asking. I am Eaton, a British Butler and Executive Concierge serving members of \"The 12 Houses of Gentlemen.\" How can I assist you today?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:06:42.069Z"
+        },
+        {
+          "id": "msg_1787306866147_vsm8",
+          "role": "user",
+          "content": "I need to get list of hostel in London",
+          "model": "qwen2.5:0.5b",
+          "concierge": null,
+          "timestamp": "2026-08-21T10:07:46.147Z"
+        },
+        {
+          "id": "msg_1787306866149_m0c8",
+          "role": "assistant",
+          "content": "Sure, I can help you with that. Here's a list of hostels in London:\n\n1. Claridge's Bar & Grill - 5 Hertford Street, Annabel's\n2. The Connaught Grill - 5 Hertford Street, Annabel's\n3. The Bulgari Spa - The Bulgari Spa\n4. The Aman Spa - Mayfair\n5. The Connaught Grill - 5 Hertford Street, Annabel's\n6. 5 Hertford Street, Annabel's - Claridge's Bar & Grill\n7. The Bulgari Spa - The Bulgari Spa\n8. The Connaught Grill - 5 Hertford Street, Annabel's\n9. The Bulgari Spa - The Bulgari Spa\n10. The Aman Spa - Mayfair\n\nWould you like me to help you find a specific hostel or just provide this list?",
+          "model": "qwen2.5:0.5b",
+          "concierge": {
+            "id": "eaton",
+            "name": "Eaton",
+            "title": "Senior Gentleman's Butler & Concierge",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+          },
+          "timestamp": "2026-08-21T10:07:46.149Z"
         }
       ]
     }
